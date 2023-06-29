@@ -29,18 +29,27 @@ export const options = {
             display: true,
             text: 'BMI Graph',
         },
+
     },
 };
-export const data = {
-    labels,
+const data = {
+    labels: ['January', 'February', 'March', 'April', 'May', 'June'],
     datasets: [
         {
-            label: 'BMI',
-            data: [24, 23.5, 24, 23.5, 23, 23.5, 24],
-            borderColor: 'rgb(255, 99, 132)',
-            backgroundColor: 'rgba(255, 99, 132, 0.5)',
+            label: 'Actual Value',
+            lineTension: 0.1,
+            backgroundColor: 'rgba(75,192,192,0.4)',
+            borderColor: 'rgba(75,192,192,1)',
+            data: [26,25.5,25.5,25,24.5,24.5,24]
         },
-    ],
+        {
+            label: 'Target Value',
+            lineTension: 0.1,
+            backgroundColor: 'rgba(255,99,132,0.2)',
+            borderColor: 'rgba(255,99,132,1)',
+            data: [23, 23, 23, 23, 23, 23, 23] // This is your target value
+        }
+    ]
 };
 const LineChart = () => {
 
