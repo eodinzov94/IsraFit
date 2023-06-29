@@ -13,6 +13,7 @@ import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import { styled } from '@mui/material/styles';
 import { FC, useState } from 'react';
+import FitnessCenterIcon from '@mui/icons-material/FitnessCenter';
 import { mainListItems, secondaryListItems, topListItems } from './Items';
 const drawerWidth = 240;
 
@@ -104,9 +105,12 @@ const AppWrapper: FC<AppWrapperProps> = ({ children, setDarkThemeSelected, darkT
                         noWrap
                         sx={{ flexGrow: 1, display: { xs: 'none', sm: 'block' }, color: 'white', textAlign: 'center' }}
                     >
-                        IsraFit
+                        < FitnessCenterIcon />
+                        &nbsp;IsraFit&nbsp;
+                        < FitnessCenterIcon sx={{rotate: '90deg'}}/>
                     </Typography>
-                    <List component="nav" sx={{display:'flex',flexDirection:'row',gap:'5px'}}>
+
+                    <List component="nav" sx={{ display: 'flex', flexDirection: 'row', gap: '5px' }}>
                         {topListItems}
                     </List>
                     <FormControlLabel
