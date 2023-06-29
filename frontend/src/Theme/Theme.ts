@@ -7,7 +7,7 @@ const lightTheme = createTheme({
             main: '#4caf50', // A vibrant green color
         },
         secondary: {
-            main: '#ff5722', // A deep orange color
+            main: '#ca6a4d', // A deep orange color
         },
         background: {
             default: '#fafafa', // light gray background
