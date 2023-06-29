@@ -121,11 +121,6 @@ const AppWrapper: FC<AppWrapperProps> = ({ children, setDarkThemeSelected, darkT
                                 <LoginIcon color='secondary' />
                             </Link>
                         </Tooltip>
-                        <Tooltip title="Graph">
-                            <Link to={'/graph'}>
-                                <BarChartIcon color='secondary'/>
-                            </Link>
-                        </Tooltip>
                     </nav>
                     <FormControlLabel
                         control={<Switch checked={darkThemeSelected}

@@ -1,6 +1,7 @@
 import LoginPage from "../Pages/LoginPage";
 import RegisterPage from "../Pages/RegisterPage";
-import LineChart from "../components/LineChart";
+import BmiChart from "../components/BmiChart";
+import CaloriesChart from "../components/CaloriesChart";
 
 
 export interface IRoute {
@@ -12,15 +13,17 @@ export enum RouteNames {
     REGISTER = '/register',
     HOME = '/',
     LOGIN = '/login',
-    GRAPH = '/graph',
+    BMI_CHART = '/bmi-chart',
+    CALORIES_CHART = '/calories-chart',
 }
 
 
 export const publicRoutes: IRoute[] = [
     { path: RouteNames.LOGIN, element: LoginPage },
     { path: RouteNames.REGISTER, element: RegisterPage },
-    { path: RouteNames.GRAPH, element: LineChart },
+    { path: RouteNames.BMI_CHART, element: BmiChart },
     { path: RouteNames.HOME, element: LoginPage },
+    { path: RouteNames.CALORIES_CHART, element: CaloriesChart },
 
 ]
 

@@ -51,7 +51,7 @@ const data = {
         }
     ]
 };
-const LineChart = () => {
+const BmiChart = () => {
 
     return (
         <div>
@@ -60,4 +60,4 @@ const LineChart = () => {
     );
 };
 
-export default LineChart;
+export default BmiChart;
