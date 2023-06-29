@@ -1,6 +1,6 @@
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import MenuIcon from '@mui/icons-material/Menu';
-import { FormControlLabel, Switch, Tooltip } from '@mui/material';
+import { FormControlLabel, Switch } from '@mui/material';
 import MuiAppBar, { AppBarProps as MuiAppBarProps } from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
@@ -13,11 +13,7 @@ import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import { styled } from '@mui/material/styles';
 import { FC, useState } from 'react';
-import { mainListItems, secondaryListItems } from './Items';
-import AppRegistrationIcon from '@mui/icons-material/AppRegistration';
-import LoginIcon from '@mui/icons-material/Login';
-import { Link } from 'react-router-dom';
-import BarChartIcon from '@mui/icons-material/BarChart';
+import { mainListItems, secondaryListItems, topListItems } from './Items';
 const drawerWidth = 240;
 
 interface AppBarProps extends MuiAppBarProps {
@@ -110,18 +106,9 @@ const AppWrapper: FC<AppWrapperProps> = ({ children, setDarkThemeSelected, darkT
                     >
                         IsraFit
                     </Typography>
-                    <nav>
-                        <Tooltip title="Register">
-                            <Link to={'/register'}>
-                                <AppRegistrationIcon color='secondary' />
-                            </Link>
-                        </Tooltip>
-                        <Tooltip title="Login">
-                            <Link to={'/login'}>
-                                <LoginIcon color='secondary' />
-                            </Link>
-                        </Tooltip>
-                    </nav>
+                    <List component="nav" sx={{display:'flex',flexDirection:'row',gap:'5px'}}>
+                        {topListItems}
+                    </List>
                     <FormControlLabel
                         control={<Switch checked={darkThemeSelected}
                             onChange={() => setDarkThemeSelected(!darkThemeSelected)}

@@ -1,7 +1,9 @@
 
+import AppRegistrationIcon from '@mui/icons-material/AppRegistration';
 import AssignmentIcon from '@mui/icons-material/Assignment';
 import BarChartIcon from '@mui/icons-material/BarChart';
 import DashboardIcon from '@mui/icons-material/Dashboard';
+import LoginIcon from '@mui/icons-material/Login';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
@@ -14,7 +16,7 @@ export const mainListItems = (
             <ListItemIcon>
                 <DashboardIcon />
             </ListItemIcon>
-            <ListItemText primary="Dashboard" />
+            <ListItemText primary="Profile" />
         </ListItemButton>
         <ListItemButton component={Link} to="/bmi-chart">
             <ListItemIcon>
@@ -30,29 +32,35 @@ export const mainListItems = (
         </ListItemButton>
     </>
 );
+export const topListItems = (
+    <>
+        <ListItemButton component={Link} to="/register" color='secondary' sx={{border: '1px solid white',borderRadius: '5px',width: '120px' }}    >
+            <ListItemText primary="Register" sx={{ color: 'white',textAlign: 'center' }}  />
+            <AppRegistrationIcon color='secondary' />
+        </ListItemButton>
 
+        <ListItemButton component={Link} to="/login" color='secondary' sx={{ marginRight: '10px', border: '1px solid white',borderRadius: '5px',width: '120px'}}>
+            <ListItemText primary="Login" sx={{ color: 'white',textAlign: 'center' }} />
+            <LoginIcon color='secondary' />
+        </ListItemButton>
+    </>
+)
 export const secondaryListItems = (
     <>
         <ListSubheader component="div" inset>
-            Saved reports
+            Set Targets
         </ListSubheader>
         <ListItemButton>
             <ListItemIcon>
                 <AssignmentIcon />
             </ListItemIcon>
-            <ListItemText primary="Current month" />
+            <ListItemText primary="Target for BMI" />
         </ListItemButton>
         <ListItemButton>
             <ListItemIcon>
                 <AssignmentIcon />
             </ListItemIcon>
-            <ListItemText primary="Last quarter" />
-        </ListItemButton>
-        <ListItemButton>
-            <ListItemIcon>
-                <AssignmentIcon />
-            </ListItemIcon>
-            <ListItemText primary="Year-end sale" />
+            <ListItemText primary="Target for Calories" />
         </ListItemButton>
     </>
 );

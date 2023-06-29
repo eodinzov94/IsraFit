@@ -5,7 +5,6 @@ import { darkTheme, lightTheme } from './Theme/Theme.ts';
 import AppWrapper from './components/AppWrapper.tsx';
 import { AppRouter } from './routes/AppRouter.tsx';
 import { BrowserRouter } from 'react-router-dom';
-
 function App() {
     const [darkThemeSelected, setDarkThemeSelected] = useState(false);
     return (
