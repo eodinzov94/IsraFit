@@ -1,4 +1,3 @@
-import React, { useState } from "react";
 import {
   Paper,
   Table,
@@ -9,12 +8,14 @@ import {
   TablePagination,
   TableRow,
   TextField,
+  Tooltip
 } from "@mui/material";
+import { useState } from "react";
 import data from "../constants/data.json";
 
 const FoodTablePage: React.FC = () => {
   const [page, setPage] = useState(0);
-  const [rowsPerPage, setRowsPerPage] = useState(5);
+  const [rowsPerPage, setRowsPerPage] = useState(10);
   const [searchTerm, setSearchTerm] = useState("");
   const handleChangePage = (
     _event: React.MouseEvent<HTMLButtonElement> | null,
@@ -36,10 +37,10 @@ const FoodTablePage: React.FC = () => {
   };
 
   const filteredData = data.filter((item) => {
-    const searchTermLower = searchTerm.toLowerCase();
-    return (
-      item.hebrew_name.toLowerCase().includes(searchTermLower) ||
-      item.english_name.toLowerCase().includes(searchTermLower)
+    const searchTerms = searchTerm.toLowerCase().split(' ');
+    return searchTerms.every(term => 
+      item.hebrew_name.toLowerCase().includes(term) || 
+      item.english_name.toLowerCase().includes(term)
     );
   });
 
@@ -47,20 +48,50 @@ const FoodTablePage: React.FC = () => {
     page * rowsPerPage,
     page * rowsPerPage + rowsPerPage
   );
-
   return (
     <div>
+      <Tooltip title="per 100gr/100ml" arrow>
       <TextField
         label="Search"
         variant="outlined"
         value={searchTerm}
         onChange={handleSearchChange}
-        fullWidth
+        sx={{
+          mb: 4,
+          width:{sm:'100%', md:'40%',xs:'100%'},
+        }}
       />
+      </Tooltip>
       <TableContainer component={Paper}>
-        <Table>
+        <Table sx={{
+          '@media screen and (max-width: 800px)': {
+            '& thead': {
+              display: 'none',
+            },
+            '& tr': {
+              borderBottom: '3px solid #ddd',
+              display: 'block',
+              marginBottom: '.625em',
+            },
+            '& td': {
+              borderBottom: '1px solid #ddd',
+              display: 'block',
+              fontSize: '.8em',
+              textAlign: 'right',
+              '&::before': {
+                content: 'attr(data-label)',
+                float: 'left',
+                fontWeight: 'bold',
+              },
+              '&:last-child': {
+                borderBottom: 0,
+              },
+            },
+          }
+        }}
+        >
           <TableHead>
-            <TableRow>
+            <TableRow >
               <TableCell>Hebrew Name</TableCell>
               <TableCell>English Name</TableCell>
               <TableCell>Protein <b>(gr)</b></TableCell>
@@ -68,24 +99,26 @@ const FoodTablePage: React.FC = () => {
               <TableCell>Carbohydrates <b>(gr)</b></TableCell>
               <TableCell>Food Energy <b>(kcal)</b></TableCell>
               <TableCell>Total Sugars <b>(gr)</b></TableCell>
+              <TableCell><b>Add</b></TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
             {slicedData.map((item) => (
-              <TableRow key={item.Code}>
-                <TableCell>{item.hebrew_name}</TableCell>
-                <TableCell>{item.english_name}</TableCell>
-                <TableCell>{item.protein}</TableCell>
-                <TableCell>{item.total_fat}</TableCell>
-                <TableCell>{item.carbohydrates}</TableCell>
-                <TableCell>{item.food_energy}</TableCell>
-                <TableCell>{item.total_sugars}</TableCell>
+              <TableRow key={item.Code} >
+                <TableCell data-label="Hebrew Name">{item.hebrew_name}</TableCell>
+                <TableCell data-label="English Name">{item.english_name}</TableCell>
+                <TableCell data-label="Protein (gr)" >{item.protein}</TableCell>
+                <TableCell data-label="Total Fat (gr)"> {item.total_fat}</TableCell>
+                <TableCell data-label="Carbohydrates (gr)">{item.carbohydrates}</TableCell>
+                <TableCell data-label="Food Energy (kcal)">{item.food_energy}</TableCell>
+                <TableCell data-label="Total Sugars (gr)">{item.total_sugars}</TableCell>
+                <TableCell>+</TableCell>
               </TableRow>
             ))}
           </TableBody>
         </Table>
         <TablePagination
-          rowsPerPageOptions={[5, 10, 25, 50]}
+          rowsPerPageOptions={[5]}
           component="div"
           count={filteredData.length}
           rowsPerPage={rowsPerPage}
