@@ -4,3 +4,6 @@
 backend/yarn.lock
 frontend/yarn.lock
 .idea/modules.xml
+.idea/.gitignore
+.idea/git_toolbox_prj.xml
+.idea/prettier.xml
