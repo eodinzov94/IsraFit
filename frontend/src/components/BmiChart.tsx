@@ -1,4 +1,3 @@
-const labels = ['January', 'February', 'March', 'April', 'May', 'June', 'July'];
 import {
     Chart as ChartJS,
     CategoryScale,
