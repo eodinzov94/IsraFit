@@ -72,7 +72,7 @@ interface AppWrapperProps {
 
 
 const AppWrapper: FC<AppWrapperProps> = ({ children, setDarkThemeSelected, darkThemeSelected }) => {
-    const [open, setOpen] = useState(true);
+    const [open, setOpen] = useState(false);
     const toggleDrawer = () => {
         setOpen(!open);
     };

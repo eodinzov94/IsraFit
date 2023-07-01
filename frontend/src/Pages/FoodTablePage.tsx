@@ -24,7 +24,6 @@ interface FoodItem {
   total_sugars: number;
   english_name: string;
 }
-
 const FoodTablePage: React.FC = () => {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
@@ -48,7 +47,7 @@ const FoodTablePage: React.FC = () => {
     setPage(0);
   };
 
-  const filteredData = data.filter((item: FoodItem) => {
+  const filteredData = data.filter((item) => {
     const searchTermLower = searchTerm.toLowerCase();
     return (
       item.hebrew_name.toLowerCase().includes(searchTermLower) ||
@@ -76,17 +75,15 @@ const FoodTablePage: React.FC = () => {
             <TableRow>
               <TableCell>Hebrew Name</TableCell>
               <TableCell>English Name</TableCell>
-              <TableCell>Ptein</TableCell>
-              <TableCell>Totarol Fat</TableCell>
-              <TableCell>Carbohydrates</TableCell>
-              <TableCell>Food Energy</TableCell>
-              <TableCell>Total Dietary Fiber</TableCell>
-              <TableCell>Saturated Fat</TableCell>
-              <TableCell>Total Sugars</TableCell>
+              <TableCell>Protein <b>(gr)</b></TableCell>
+              <TableCell>Total Fat <b>(gr)</b></TableCell>
+              <TableCell>Carbohydrates <b>(gr)</b></TableCell>
+              <TableCell>Food Energy <b>(kcal)</b></TableCell>
+              <TableCell>Total Sugars <b>(gr)</b></TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
-            {slicedData.map((item: FoodItem) => (
+            {slicedData.map((item) => (
               <TableRow key={item.Code}>
                 <TableCell>{item.hebrew_name}</TableCell>
                 <TableCell>{item.english_name}</TableCell>
@@ -94,15 +91,13 @@ const FoodTablePage: React.FC = () => {
                 <TableCell>{item.total_fat}</TableCell>
                 <TableCell>{item.carbohydrates}</TableCell>
                 <TableCell>{item.food_energy}</TableCell>
-                <TableCell>{item.total_dietary_fiber}</TableCell>
-                <TableCell>{item.saturated_fat}</TableCell>
                 <TableCell>{item.total_sugars}</TableCell>
               </TableRow>
             ))}
           </TableBody>
         </Table>
         <TablePagination
-          rowsPerPageOptions={[5, 10, 25]}
+          rowsPerPageOptions={[5, 10, 25,50]}
           component="div"
           count={filteredData.length}
           rowsPerPage={rowsPerPage}
