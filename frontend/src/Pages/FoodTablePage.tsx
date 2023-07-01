@@ -12,18 +12,6 @@ import {
 } from "@mui/material";
 import data from "../constants/data.json";
 
-interface FoodItem {
-  Code: number;
-  hebrew_name: string;
-  protein: number;
-  total_fat: number;
-  carbohydrates: number;
-  food_energy: number;
-  total_dietary_fiber: number;
-  saturated_fat: number;
-  total_sugars: number;
-  english_name: string;
-}
 const FoodTablePage: React.FC = () => {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
@@ -97,7 +85,7 @@ const FoodTablePage: React.FC = () => {
           </TableBody>
         </Table>
         <TablePagination
-          rowsPerPageOptions={[5, 10, 25,50]}
+          rowsPerPageOptions={[5, 10, 25, 50]}
           component="div"
           count={filteredData.length}
           rowsPerPage={rowsPerPage}
