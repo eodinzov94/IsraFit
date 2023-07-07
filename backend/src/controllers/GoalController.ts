@@ -9,13 +9,13 @@ class GoalController {
     async setGoal(req: TypedRequestBody<IGoal>, res: Response, next: NextFunction) {
         const { userId, duration, goalWeight, avgCalory } = req.body
         try {
-            const goal = await Goal.upsert({
+            await Goal.upsert({
                 userId: userId,
                 duration: duration,
                 goalWeight: goalWeight,
                 avgCalory: avgCalory
             })
-            return res.json({ status: 'OK', goal: goal })
+            return res.json({ status: 'OK' })
         } catch (e: any) {
             return next(ApiError.badRequest('Input error, maybe user with passed ID does not exists'))
         }

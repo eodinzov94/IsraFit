@@ -103,7 +103,7 @@ class UserController {
     async updateUser(req: TypedRequestBody<IUserUpdate>, res: Response, next: NextFunction) {
         const fieldsToUpdate: Partial<IUserUpdate> = {};
         for (const [key, value] of Object.entries(req.body)) {
-            if (value !== undefined && key in IUserUpdateKeys) {
+            if (value !== undefined && IUserUpdateKeys.includes(key)) {
                 fieldsToUpdate[key as keyof IUserUpdate] = value;
             }
         }
