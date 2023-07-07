@@ -1,16 +1,9 @@
-import Grid from '@mui/material/Grid';
-import Typography from '@mui/material/Typography';
-import TextField from '@mui/material/TextField';
-import CssBaseline from "@mui/material/CssBaseline";
-import Container from "@mui/material/Container";
-import Box from "@mui/material/Box";
-import WavingHandIcon from '@mui/icons-material/WavingHand';
 import Avatar from "@mui/material/Avatar";
 import {z} from "zod";
 import {useFormik} from "formik";
 import {toFormikValidationSchema} from "zod-formik-adapter";
-import Button from "@mui/material/Button";
-import {MenuItem, Stack, Switch} from "@mui/material";
+import {Box, Button, Container, CssBaseline, Grid, MenuItem, Stack, Switch, TextField, Typography} from '@mui/material';
+import WavingHandIcon from '@mui/icons-material/WavingHand';
 import {ChangeEvent} from "react";
 import {useNavigate} from "react-router-dom";
 
@@ -40,31 +33,19 @@ export default function InitialDetailsPage() {
     });
     const formik = useFormik({
         initialValues: {
-            firstName: '',
-            lastName: '',
-            weight: 35,
-            height: 120,
-            gender: 'Male',
-            pal: 1.2,
-            age: 18,
-            TDEE: 0,
-        },
-        validationSchema: toFormikValidationSchema(DetailsSchema),
-        onSubmit: values => {
-            const BMR = (10* values.weight + 6.25*values.height - 5*values.age) + (values.gender === 'Male' ? 5 : -161);
+            firstName: '', lastName: '', weight: 35, height: 120, gender: 'Male', pal: 1.2, age: 18, TDEE: 0,
+        }, validationSchema: toFormikValidationSchema(DetailsSchema), onSubmit: values => {
+            const BMR = (10 * values.weight + 6.25 * values.height - 5 * values.age) + (values.gender === 'Male' ? 5 : -161);
             values.TDEE = BMR * values.pal;
             // TODO - save values in DB
-
-
-            navigate('/goal-set', {state:values})
+            navigate('/goal-set', {state: values})
         },
     });
 
     const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
         formik.setFieldValue('gender', e.target.checked ? 'Male' : 'Female')
     }
-    return (
-        <Container component="main" maxWidth="sm">
+    return (<Container component="main" maxWidth="sm">
             <CssBaseline/>
             <Box
                 sx={{
@@ -190,7 +171,7 @@ export default function InitialDetailsPage() {
                             <Switch id="gender" name="gender" defaultChecked={true}
                                     onChange={handleChange}
                                     onBlur={formik.handleBlur}
-                                    color = "default"/>
+                                    color="default"/>
                             <Typography>Male</Typography>
                         </Stack>
                     </Grid>
@@ -206,6 +187,5 @@ export default function InitialDetailsPage() {
                     </Grid>
                 </Grid>
             </Box>
-        </Container>
-    );
+        </Container>);
 }
