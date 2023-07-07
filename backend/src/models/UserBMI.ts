@@ -1,0 +1,21 @@
+import { DataTypes, Model } from 'sequelize'
+import { db } from '../db.js'
+import { IUserBMI, IUserBmiInput } from '../types/UserBMITypes.js'
+
+
+class UserBMI extends Model<IUserBMI, IUserBmiInput> implements IUserBMI {
+    public userId!: number
+    public value!: number
+    public date!: Date
+}
+
+UserBMI.init({
+    userId: { type: DataTypes.INTEGER, primaryKey: true ,references: { model: 'Users', key: 'id' } },
+    value: { type: DataTypes.FLOAT, allowNull: false },
+    date: { type: DataTypes.DATE, allowNull: false,primaryKey: true  },
+}, {
+    timestamps: false,
+    sequelize: db,
+})
+
+export default UserBMI
