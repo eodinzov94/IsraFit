@@ -10,10 +10,12 @@ import {z} from "zod";
 import {useFormik} from "formik";
 import {toFormikValidationSchema} from "zod-formik-adapter";
 import Button from "@mui/material/Button";
-import {Stack, Switch} from "@mui/material";
+import {MenuItem, Stack, Switch} from "@mui/material";
 import {ChangeEvent} from "react";
+import {useNavigate} from "react-router-dom";
 
 export default function InitialDetailsPage() {
+    const navigate = useNavigate()
     const DetailsSchema = z.object({
         firstName: z
             .string({required_error: "Please enter your first name"})
@@ -30,6 +32,10 @@ export default function InitialDetailsPage() {
             .gte(120, "You must be at least 120cm")
             .lte(250, "You must be at most 250cm"),
         gender: z.string(),
+        pal: z.number({required_error: "Please choose a physical activity level"}),
+        age: z.number({required_error: "Please enter your age"})
+            .gte(18, "You must be at least 18 years old")
+            .lte(100, "You, sadly, must be at most 100 years old")
 
     });
     const formik = useFormik({
@@ -39,11 +45,18 @@ export default function InitialDetailsPage() {
             weight: 35,
             height: 120,
             gender: 'Male',
+            pal: 1.2,
+            age: 18,
+            TDEE: 0,
         },
         validationSchema: toFormikValidationSchema(DetailsSchema),
         onSubmit: values => {
-            // TODO
-            console.log(values);
+            const BMR = (10* values.weight + 6.25*values.height - 5*values.age) + (values.gender === 'Male' ? 5 : -161);
+            values.TDEE = BMR * values.pal;
+            // TODO - save values in DB
+
+
+            navigate('/goal-set', {state:values})
         },
     });
 
@@ -51,7 +64,6 @@ export default function InitialDetailsPage() {
         formik.setFieldValue('gender', e.target.checked ? 'Male' : 'Female')
     }
     return (
-        //TODO:Stepper between this form, and goal set
         <Container component="main" maxWidth="sm">
             <CssBaseline/>
             <Box
@@ -127,13 +139,48 @@ export default function InitialDetailsPage() {
                             required
                             id="height"
                             name="height"
-                            label="height (cm)"
+                            label="Height (cm)"
                             type="number"
                             onChange={formik.handleChange}
                             onBlur={formik.handleBlur}
                             value={formik.values.height}
                             error={formik.touched.height && Boolean(formik.errors.height)}
                             helperText={formik.touched.height && formik.errors.height}
+                            fullWidth
+                        />
+                    </Grid>
+                    <Grid item xs={12} sm={6}>
+                        <TextField
+                            required
+                            fullWidth
+                            select
+                            id="pal"
+                            name="pal"
+                            label="Physical Activity Level"
+                            onChange={formik.handleChange}
+                            onBlur={formik.handleBlur}
+                            error={formik.touched.pal && Boolean(formik.errors.pal)}
+                            helperText={formik.touched.pal && formik.errors.pal}
+                            value={formik.values.pal}
+                        >
+                            <MenuItem value={1.2}>Not very active</MenuItem>
+                            <MenuItem value={1.375}>Somewhat active</MenuItem>
+                            <MenuItem value={1.725}>Very active</MenuItem>
+                            <MenuItem value={1.9}>Extremely active</MenuItem>
+                        </TextField>
+                    </Grid>
+                    <Grid item xs={12} sm={6}>
+                        <TextField
+                            required
+                            id="age"
+                            name="age"
+                            label="Age"
+                            type="number"
+                            onChange={formik.handleChange}
+                            onBlur={formik.handleBlur}
+                            value={formik.values.age}
+                            error={formik.touched.age && Boolean(formik.errors.age)}
+                            helperText={formik.touched.age && formik.errors.age}
                             fullWidth
                         />
                     </Grid>
