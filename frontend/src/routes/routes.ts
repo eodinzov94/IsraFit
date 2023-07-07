@@ -4,6 +4,7 @@ import BmiChart from "../components/BmiChart";
 import CaloriesChart from "../components/CaloriesChart";
 import FoodTablePage from "../Pages/FoodTablePage";
 import InitialDetailsPage from "../Pages/InitialDetailsPage";
+import GoalSetPage from "../Pages/GoalSetPage";
 
 
 export interface IRoute {
@@ -12,6 +13,7 @@ export interface IRoute {
 }
 
 export enum RouteNames {
+    GOAL_SET = '/goal-set',
     INITIAL_DETAILS = "/init",
     REGISTER = '/register',
     HOME = '/',
@@ -23,13 +25,15 @@ export enum RouteNames {
 
 
 export const publicRoutes: IRoute[] = [
-    { path: RouteNames.INITIAL_DETAILS, element: InitialDetailsPage },
-    { path: RouteNames.LOGIN, element: LoginPage },
-    { path: RouteNames.REGISTER, element: RegisterPage },
-    { path: RouteNames.BMI_CHART, element: BmiChart },
-    { path: RouteNames.HOME, element: LoginPage },
-    { path: RouteNames.CALORIES_CHART, element: CaloriesChart },
-    { path: RouteNames.FOOD_TABLE, element: FoodTablePage },
+    {path: RouteNames.INITIAL_DETAILS, element: InitialDetailsPage}, //TODO: Move these to private user routes
+    {path: RouteNames.GOAL_SET, element: GoalSetPage},
+
+    {path: RouteNames.LOGIN, element: LoginPage},
+    {path: RouteNames.REGISTER, element: RegisterPage},
+    {path: RouteNames.BMI_CHART, element: BmiChart},
+    {path: RouteNames.HOME, element: LoginPage},
+    {path: RouteNames.CALORIES_CHART, element: CaloriesChart},
+    {path: RouteNames.FOOD_TABLE, element: FoodTablePage},
 
 ]
 
