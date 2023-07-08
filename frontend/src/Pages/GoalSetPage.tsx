@@ -8,11 +8,13 @@ import {useLocation, useNavigate} from "react-router-dom";
 import {DatePicker, LocalizationProvider} from "@mui/x-date-pickers";
 import dayjs, {Dayjs} from "dayjs";
 import {AdapterDayjs} from "@mui/x-date-pickers/AdapterDayjs";
+import {ChangeEvent, useState} from "react";
 
 export default function GoalSetPage() {
+    const [alertMessage, setMessage] = useState<string>('')
     const navigate = useNavigate()
     const location = useLocation()
-    // const {weight, height, gender, TDEE} = location.state // TODO: Replace with user data from backend, or stick with location?
+    const {weight, gender, TDEE} = location.state // TODO: Replace with user data from backend, or stick with location?
     const GoalSchema = z.object({
         weightGoal: z.number({required_error: "Please choose a goal!"})
             .gte(35, "Weighing below 35kg is not recommended")
@@ -23,12 +25,43 @@ export default function GoalSetPage() {
         initialValues: {
             weightGoal: 35, dateGoal: dayjs(),
         }, validationSchema: toFormikValidationSchema(GoalSchema), onSubmit: values => {
-            // TODO
+            // Can't allow submitting if the user is making bad choices.
+            if (alertMessage.length)
+                return
 
-            console.log(values);
-            navigate('/login')
+            // Algebra, from formulas
+            const totalCalorieDeficit = Math.abs((weight - values.weightGoal) * 7700);
+            const avgDailiyDeficit = totalCalorieDeficit / values.dateGoal.diff(dayjs(), 'days');
+            const TDEEDeficit = TDEE - avgDailiyDeficit
+
+            // validate bad life choices by the user.
+            checkDeficit(TDEEDeficit)
+
+            // navigate('/login')
         },
     });
+
+    /** Edge cases for weight selection*/
+    const onWeightChange = (e: ChangeEvent<HTMLInputElement>) => {
+        const goal = parseInt(e.target.value) || 0;
+        if (!goal)
+            setMessage('Please enter a valid number')
+        else if (!(goal > 50 && goal < 150)) {
+            setMessage("This weight is unhealthy, please reconsider!")
+        } else {
+            setMessage('')
+        }
+        formik.setFieldValue('weightGoal', goal ? goal : '')
+    }
+
+    /**Check if the user chose values that are too extreme - we can't allow too rapid weight change, it's unhealthy.*/
+    const checkDeficit = (TDEEDeficit: number) => {
+        if (TDEEDeficit < (gender === 'Male' ? 1500 : 1200)) {
+            setMessage('WARNING! This weight loss plan is too aggressive!')
+        } else if (TDEEDeficit > (gender === 'Male' ? 2000 : 1600)) {
+            setMessage(`WARNING! You're risking over-eating!`)
+        }
+    }
     return (<Container component="main" maxWidth="sm">
         <CssBaseline/>
         <Box
@@ -63,11 +96,12 @@ export default function GoalSetPage() {
                         name="weightGoal"
                         label="Your weight goal is: (kg)"
                         type="number"
-                        onChange={formik.handleChange}
+                        onChange={onWeightChange}
                         onBlur={formik.handleBlur}
                         value={formik.values.weightGoal}
                         error={formik.touched.weightGoal && Boolean(formik.errors.weightGoal)}
-                        helperText={formik.touched.weightGoal && formik.errors.weightGoal}
+                        helperText={alertMessage}
+                        color={alertMessage.length ? 'warning' : 'primary'}
                     />
                 </Grid>
                 <Divider style={{width: '96%', margin: '40px 0 20px 20px'}}/>
@@ -82,6 +116,7 @@ export default function GoalSetPage() {
                             value={formik.values.dateGoal}
                             onChange={(day) => {
                                 formik.setFieldValue('dateGoal', day);
+                                setMessage('')
                             }}
                         />
                     </LocalizationProvider>

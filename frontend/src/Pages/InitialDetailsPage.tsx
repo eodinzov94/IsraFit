@@ -47,7 +47,7 @@ export default function InitialDetailsPage() {
 
             //TODO: calculate & save BMI in DB, formula: weight / ((height/100)^2)
             // TODO - save values in DB
-            navigate('/goal-set', {state: values})
+            navigate('/goal-set', {state: {weight: values.weight, gender: values.gender, TDEE: values.TDEE}})
         },
     });
 
@@ -55,146 +55,146 @@ export default function InitialDetailsPage() {
         formik.setFieldValue('gender', e.target.checked ? 'Male' : 'Female')
     }
     return (<Container component="main" maxWidth="sm">
-            <CssBaseline/>
-            <Box
-                sx={{
-                    backgroundColor: '#fff',
-                    border: '1px solid rgba(0, 0, 0, 0.12)',
-                    padding: '20px',
-                    marginTop: 8,
-                    flexDirection: 'column',
-                    display: 'flex',
-                    alignItems: 'center'
-                }}
-            >
-                <Avatar sx={{m: 1, bgcolor: 'primary.main'}}>
-                    <WavingHandIcon/>
-                </Avatar>
-                <Typography variant="h6" gutterBottom>
-                    Welcome to IsraFit!
-                </Typography>
-                <Typography variant="body1" gutterBottom>
-                    To get the best results from our app, we need some info about you:
-                </Typography>
-                <Grid component="form" onSubmit={formik.handleSubmit} container spacing={3} mt={3}>
-                    <Grid item xs={12} sm={6}>
-                        <TextField
-                            required
-                            id="firstName"
-                            name="firstName"
-                            label="First name"
-                            type="text"
-                            onChange={formik.handleChange}
-                            onBlur={formik.handleBlur}
-                            value={formik.values.firstName}
-                            error={formik.touched.firstName && Boolean(formik.errors.firstName)}
-                            helperText={formik.touched.firstName && formik.errors.firstName}
-                            fullWidth
-                            autoComplete="given-name"
-                        />
-                    </Grid>
-                    <Grid item xs={12} sm={6}>
-                        <TextField
-                            required
-                            id="lastName"
-                            name="lastName"
-                            label="Last name"
-                            type="text"
-                            onChange={formik.handleChange}
-                            onBlur={formik.handleBlur}
-                            value={formik.values.lastName}
-                            error={formik.touched.lastName && Boolean(formik.errors.lastName)}
-                            helperText={formik.touched.lastName && formik.errors.lastName}
-                            fullWidth
-                            autoComplete="family-name"
-                        />
-                    </Grid>
-                    <Grid item xs={12} sm={6}>
-                        <TextField
-                            required
-                            id="weight"
-                            name="weight"
-                            label="Weight (kg)"
-                            type="number"
-                            onChange={formik.handleChange}
-                            onBlur={formik.handleBlur}
-                            value={formik.values.weight}
-                            error={formik.touched.weight && Boolean(formik.errors.weight)}
-                            helperText={formik.touched.weight && formik.errors.weight}
-                            fullWidth
-                        />
-                    </Grid>
-                    <Grid item xs={12} sm={6}>
-                        <TextField
-                            required
-                            id="height"
-                            name="height"
-                            label="Height (cm)"
-                            type="number"
-                            onChange={formik.handleChange}
-                            onBlur={formik.handleBlur}
-                            value={formik.values.height}
-                            error={formik.touched.height && Boolean(formik.errors.height)}
-                            helperText={formik.touched.height && formik.errors.height}
-                            fullWidth
-                        />
-                    </Grid>
-                    <Grid item xs={12} sm={6}>
-                        <TextField
-                            required
-                            fullWidth
-                            select
-                            id="pal"
-                            name="pal"
-                            label="Physical Activity Level"
-                            onChange={formik.handleChange}
-                            onBlur={formik.handleBlur}
-                            error={formik.touched.pal && Boolean(formik.errors.pal)}
-                            helperText={formik.touched.pal && formik.errors.pal}
-                            value={formik.values.pal}
-                        >
-                            <MenuItem value={1.2}>Not very active</MenuItem>
-                            <MenuItem value={1.375}>Somewhat active</MenuItem>
-                            <MenuItem value={1.725}>Very active</MenuItem>
-                            <MenuItem value={1.9}>Extremely active</MenuItem>
-                        </TextField>
-                    </Grid>
-                    <Grid item xs={12} sm={6}>
-                        <TextField
-                            required
-                            id="age"
-                            name="age"
-                            label="Age"
-                            type="number"
-                            onChange={formik.handleChange}
-                            onBlur={formik.handleBlur}
-                            value={formik.values.age}
-                            error={formik.touched.age && Boolean(formik.errors.age)}
-                            helperText={formik.touched.age && formik.errors.age}
-                            fullWidth
-                        />
-                    </Grid>
-                    <Grid item xs={12} container justifyContent="center">
-                        <Stack direction="row" spacing={1} alignItems="center">
-                            <Typography>Female</Typography>
-                            <Switch id="gender" name="gender" defaultChecked={true}
-                                    onChange={handleChange}
-                                    onBlur={formik.handleBlur}
-                                    color="default"/>
-                            <Typography>Male</Typography>
-                        </Stack>
-                    </Grid>
-                    <Grid item xs={12}>
-                        <Button
-                            type="submit"
-                            fullWidth
-                            variant="contained"
-                            sx={{mt: 3, mb: 2, color: 'white'}}
-                        >
-                            Continue
-                        </Button>
-                    </Grid>
+        <CssBaseline/>
+        <Box
+            sx={{
+                backgroundColor: '#fff',
+                border: '1px solid rgba(0, 0, 0, 0.12)',
+                padding: '20px',
+                marginTop: 8,
+                flexDirection: 'column',
+                display: 'flex',
+                alignItems: 'center'
+            }}
+        >
+            <Avatar sx={{m: 1, bgcolor: 'primary.main'}}>
+                <WavingHandIcon/>
+            </Avatar>
+            <Typography variant="h6" gutterBottom>
+                Welcome to IsraFit!
+            </Typography>
+            <Typography variant="body1" gutterBottom>
+                To get the best results from our app, we need some info about you:
+            </Typography>
+            <Grid component="form" onSubmit={formik.handleSubmit} container spacing={3} mt={3}>
+                <Grid item xs={12} sm={6}>
+                    <TextField
+                        required
+                        id="firstName"
+                        name="firstName"
+                        label="First name"
+                        type="text"
+                        onChange={formik.handleChange}
+                        onBlur={formik.handleBlur}
+                        value={formik.values.firstName}
+                        error={formik.touched.firstName && Boolean(formik.errors.firstName)}
+                        helperText={formik.touched.firstName && formik.errors.firstName}
+                        fullWidth
+                        autoComplete="given-name"
+                    />
                 </Grid>
-            </Box>
-        </Container>);
+                <Grid item xs={12} sm={6}>
+                    <TextField
+                        required
+                        id="lastName"
+                        name="lastName"
+                        label="Last name"
+                        type="text"
+                        onChange={formik.handleChange}
+                        onBlur={formik.handleBlur}
+                        value={formik.values.lastName}
+                        error={formik.touched.lastName && Boolean(formik.errors.lastName)}
+                        helperText={formik.touched.lastName && formik.errors.lastName}
+                        fullWidth
+                        autoComplete="family-name"
+                    />
+                </Grid>
+                <Grid item xs={12} sm={6}>
+                    <TextField
+                        required
+                        id="weight"
+                        name="weight"
+                        label="Weight (kg)"
+                        type="number"
+                        onChange={formik.handleChange}
+                        onBlur={formik.handleBlur}
+                        value={formik.values.weight}
+                        error={formik.touched.weight && Boolean(formik.errors.weight)}
+                        helperText={formik.touched.weight && formik.errors.weight}
+                        fullWidth
+                    />
+                </Grid>
+                <Grid item xs={12} sm={6}>
+                    <TextField
+                        required
+                        id="height"
+                        name="height"
+                        label="Height (cm)"
+                        type="number"
+                        onChange={formik.handleChange}
+                        onBlur={formik.handleBlur}
+                        value={formik.values.height}
+                        error={formik.touched.height && Boolean(formik.errors.height)}
+                        helperText={formik.touched.height && formik.errors.height}
+                        fullWidth
+                    />
+                </Grid>
+                <Grid item xs={12} sm={6}>
+                    <TextField
+                        required
+                        fullWidth
+                        select
+                        id="pal"
+                        name="pal"
+                        label="Physical Activity Level"
+                        onChange={formik.handleChange}
+                        onBlur={formik.handleBlur}
+                        error={formik.touched.pal && Boolean(formik.errors.pal)}
+                        helperText={formik.touched.pal && formik.errors.pal}
+                        value={formik.values.pal}
+                    >
+                        <MenuItem value={1.2}>Not very active</MenuItem>
+                        <MenuItem value={1.375}>Somewhat active</MenuItem>
+                        <MenuItem value={1.725}>Very active</MenuItem>
+                        <MenuItem value={1.9}>Extremely active</MenuItem>
+                    </TextField>
+                </Grid>
+                <Grid item xs={12} sm={6}>
+                    <TextField
+                        required
+                        id="age"
+                        name="age"
+                        label="Age"
+                        type="number"
+                        onChange={formik.handleChange}
+                        onBlur={formik.handleBlur}
+                        value={formik.values.age}
+                        error={formik.touched.age && Boolean(formik.errors.age)}
+                        helperText={formik.touched.age && formik.errors.age}
+                        fullWidth
+                    />
+                </Grid>
+                <Grid item xs={12} container justifyContent="center">
+                    <Stack direction="row" spacing={1} alignItems="center">
+                        <Typography>Female</Typography>
+                        <Switch id="gender" name="gender" defaultChecked={true}
+                                onChange={handleChange}
+                                onBlur={formik.handleBlur}
+                                color="default"/>
+                        <Typography>Male</Typography>
+                    </Stack>
+                </Grid>
+                <Grid item xs={12}>
+                    <Button
+                        type="submit"
+                        fullWidth
+                        variant="contained"
+                        sx={{mt: 3, mb: 2, color: 'white'}}
+                    >
+                        Continue
+                    </Button>
+                </Grid>
+            </Grid>
+        </Box>
+    </Container>);
 }
