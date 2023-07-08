@@ -6,7 +6,6 @@ export interface IMeal {
 }
 
 export interface InputMeal{
-    userId: number
     date: Date
     meal: {code: number, quantity: number}[]
 

@@ -4,6 +4,7 @@ import authMiddleware from '../middleware/AuthMiddleware.js'
 import MealController from '../controllers/MealController.js'
 import GoalController from '../controllers/GoalController.js'
 import UserBmiController from '../controllers/UserBmiController.js'
+import AdminController from '../controllers/AdminController.js'
 
 const router = Router()
 //UserController
@@ -20,4 +21,6 @@ router.get('/get-goal', authMiddleware, GoalController.getGoal)
 //UserBmiController
 router.post('/update-bmi', authMiddleware, UserBmiController.updateBMI)
 router.get('/get-mbi-history', authMiddleware, UserBmiController.getMbiHistory)
+//AdminController
+router.get('/get-all-logs', AdminController.getAllLogs)
 export default router

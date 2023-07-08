@@ -9,3 +9,6 @@ export interface TypedRequestBody<T> extends Request {
 export interface RequestWithUser extends Request {
     user?: IUser
 }
+export interface RequestWithUserEmail extends Request {
+    userEmail?: string
+}

@@ -4,7 +4,6 @@ export interface IUserBMI {
     value: number
 }
 export interface IUserBmiInput{
-    userId: number
     value: number
     date?: Date
 }

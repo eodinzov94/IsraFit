@@ -7,10 +7,10 @@ import { IUserBmiInput } from '../types/UserBMITypes.js'
 
 class UserBmiController {
     async updateBMI(req: TypedRequestBody<IUserBmiInput>, res: Response, next: NextFunction) {
-        const { userId, value } = req.body
+        const { value } = req.body
         try {
             await UserBMI.upsert({
-                userId: userId,
+                userId: req.user!.id,
                 value: value,
                 date: new Date()
             })

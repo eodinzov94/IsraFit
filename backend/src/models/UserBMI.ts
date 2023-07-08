@@ -1,9 +1,9 @@
 import { DataTypes, Model } from 'sequelize'
 import { db } from '../db.js'
-import { IUserBMI, IUserBmiInput } from '../types/UserBMITypes.js'
+import { IUserBMI } from '../types/UserBMITypes.js'
 
 
-class UserBMI extends Model<IUserBMI, IUserBmiInput> implements IUserBMI {
+class UserBMI extends Model<IUserBMI, IUserBMI> implements IUserBMI {
     public userId!: number
     public value!: number
     public date!: Date

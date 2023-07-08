@@ -112,7 +112,7 @@ class UserController {
             return next(ApiError.badRequest('No fields to update'))
         }
         try {
-            await User.update({ ...fieldsToUpdate }, { where: { email: req.user?.email } })
+            await User.update({ ...fieldsToUpdate }, { where: { id: req.user?.id } })
             const user = await User.findOne({ where: { email: req.user?.email } })
             if (!user) {
                 return next(ApiError.badRequest('User does not exists'))
