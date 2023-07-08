@@ -31,8 +31,8 @@ export default function GoalSetPage() {
 
             // Algebra, from formulas
             const totalCalorieDeficit = Math.abs((weight - values.weightGoal) * 7700);
-            const avgDailiyDeficit = totalCalorieDeficit / values.dateGoal.diff(dayjs(), 'days');
-            const TDEEDeficit = TDEE - avgDailiyDeficit
+            const avgDailyDeficit = totalCalorieDeficit / values.dateGoal.diff(dayjs(), 'days');
+            const TDEEDeficit = TDEE - avgDailyDeficit
 
             // validate bad life choices by the user.
             checkDeficit(TDEEDeficit)

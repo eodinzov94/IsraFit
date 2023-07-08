@@ -36,12 +36,12 @@ export const topListItems = (
     <>
         <ListItemButton component={Link} to="/register" color='secondary' sx={{border: '1px solid white',borderRadius: '5px',width: { xs: '60px', sm: '120px' } }}    >
             <ListItemText primary="Register" sx={{ color: 'white',textAlign: { xs: 'none', sm: 'center' },visibility:{ xs: 'hidden', sm: 'visible' } }}  />
-            <AppRegistrationIcon color='secondary' />
+            <AppRegistrationIcon color='warning' />
         </ListItemButton>
 
         <ListItemButton component={Link} to="/login" color='secondary' sx={{ marginRight: '10px', border: '1px solid white',borderRadius: '5px', width: { xs: '60px', sm: '120px' }}}>
             <ListItemText primary="Login" sx={{ color: 'white',textAlign: 'center' , visibility:{ xs: 'hidden', sm: 'visible' }}}/>
-            <LoginIcon color='secondary' />
+            <LoginIcon color='warning' />
         </ListItemButton>
     </>
 )
