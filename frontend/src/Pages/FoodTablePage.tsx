@@ -101,7 +101,7 @@ const FoodTablePage = () => {
           </TableHead>
           <TableBody>
             {slicedData.map((item) => (
-              <TableRow key={item.Code} >
+              <TableRow key={item.code} >
                 <TableCell data-label="Hebrew Name">{item.hebrew_name}</TableCell>
                 <TableCell data-label="English Name">{item.english_name}</TableCell>
                 <TableCell data-label="Protein (gr)" >{item.protein}</TableCell>
