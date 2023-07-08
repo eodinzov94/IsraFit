@@ -4,3 +4,6 @@ test@email.test 2023-07-08T19:04:58.940Z GET /api/get-meal-history 200
 test@email.test 2023-07-08T19:05:01.217Z GET /api/auth-me 200
 Guest 2023-07-08T19:05:04.621Z POST /api/login 200
 test@email.test 2023-07-08T19:05:08.012Z POST /api/update-user-data 200
+Guest 2023-07-08T19:14:50.757Z POST /api/login 200
+tes2t@email.test 2023-07-08T19:15:23.076Z POST /api/login 200
+test3@email.test 2023-07-08T19:15:42.829Z POST /api/register 200
