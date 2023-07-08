@@ -8,6 +8,13 @@ import {ChangeEvent} from "react";
 import {useNavigate} from "react-router-dom";
 
 export default function InitialDetailsPage() {
+    /*
+      TODO:
+        Figure out separation between guest and user logic;
+        for guest, take firstname & lastname - for user, take from DB?
+        for guest, continue this pipeline until calories are calculated, then discard and suggest to register?
+        for user, update as normal, continue fitness plan.
+     */
     const navigate = useNavigate()
     const DetailsSchema = z.object({
         firstName: z
@@ -19,11 +26,11 @@ export default function InitialDetailsPage() {
             .min(2, "Last name must be at least 2 characters long")
             .max(50, "Last name must be at most 50 characters long"),
         weight: z.number({required_error: "Please enter your weight"})
-            .gte(35, "You must be at least 35kg")
-            .lte(250, "You must be at most 250kg"),
+            .gte(35, "You cannot be under 35kg!")
+            .lte(250, "You must be at most 250kg!"),
         height: z.number({required_error: "Please enter your height"})
-            .gte(120, "You must be at least 120cm")
-            .lte(250, "You must be at most 250cm"),
+            .gte(120, "You cannot be under 120cm")
+            .lte(250, "You cannot be over 250cm"),
         gender: z.string(),
         pal: z.number({required_error: "Please choose a physical activity level"}),
         age: z.number({required_error: "Please enter your age"})
@@ -37,6 +44,8 @@ export default function InitialDetailsPage() {
         }, validationSchema: toFormikValidationSchema(DetailsSchema), onSubmit: values => {
             const BMR = (10 * values.weight + 6.25 * values.height - 5 * values.age) + (values.gender === 'Male' ? 5 : -161);
             values.TDEE = BMR * values.pal;
+
+            //TODO: calculate & save BMI in DB, formula: weight / ((height/100)^2)
             // TODO - save values in DB
             navigate('/goal-set', {state: values})
         },

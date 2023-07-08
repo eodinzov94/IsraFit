@@ -3,10 +3,10 @@ import Avatar from "@mui/material/Avatar";
 import {z} from "zod";
 import {useFormik} from "formik";
 import {toFormikValidationSchema} from "zod-formik-adapter";
-import {Box, Button, Container, CssBaseline, Grid, TextField, Typography} from '@mui/material';
+import {Box, Button, Container, CssBaseline, Divider, Grid, TextField, Typography} from '@mui/material';
 import {useLocation, useNavigate} from "react-router-dom";
-import {LocalizationProvider, StaticDatePicker} from "@mui/x-date-pickers";
-import dayjs from "dayjs";
+import {DatePicker, LocalizationProvider} from "@mui/x-date-pickers";
+import dayjs, {Dayjs} from "dayjs";
 import {AdapterDayjs} from "@mui/x-date-pickers/AdapterDayjs";
 
 export default function GoalSetPage() {
@@ -15,15 +15,16 @@ export default function GoalSetPage() {
     // const {weight, height, gender, TDEE} = location.state // TODO: Replace with user data from backend, or stick with location?
     const GoalSchema = z.object({
         weightGoal: z.number({required_error: "Please choose a goal!"})
-            .gte(35, "You must be at least 35kg")
-            .lte(250, "You must be at most 250kg"),
-
+            .gte(35, "Weighing below 35kg is not recommended")
+            .lte(250, "Over 250kg as a goal is too high, try something lower!"),
+        dateGoal: z.instanceof(dayjs as unknown as typeof Dayjs)
     });
     const formik = useFormik({
         initialValues: {
             weightGoal: 35, dateGoal: dayjs(),
         }, validationSchema: toFormikValidationSchema(GoalSchema), onSubmit: values => {
             // TODO
+
             console.log(values);
             navigate('/login')
         },
@@ -48,15 +49,19 @@ export default function GoalSetPage() {
                 Ready to reach your next fitness milestone?
             </Typography>
             <Typography variant="body1" gutterBottom>
-                Tell us more about what you're trying to achieve:
+                Tell us more about what you're trying to achieve!
             </Typography>
+            <Divider style={{width: '100%', marginTop: '20px'}}/>
             <Grid component="form" onSubmit={formik.handleSubmit} container spacing={3} mt={3}>
+                <Typography variant="subtitle1" gutterBottom marginLeft="20px" marginBottom="-5px">
+                    1) First, what weight are you trying to reach?
+                </Typography>
                 <Grid item xs={12} container justifyContent="center">
                     <TextField
                         required
                         id="weightGoal"
                         name="weightGoal"
-                        label="Your weight goal is:"
+                        label="Your weight goal is: (kg)"
                         type="number"
                         onChange={formik.handleChange}
                         onBlur={formik.handleBlur}
@@ -65,23 +70,21 @@ export default function GoalSetPage() {
                         helperText={formik.touched.weightGoal && formik.errors.weightGoal}
                     />
                 </Grid>
-                <Grid item xs={12}>
-                    <Box
-                        sx={{
-                            backgroundColor: '#fff',
-                            border: '1px solid rgba(0, 0, 0, 0.12)',
-                        }}
-                    >
+                <Divider style={{width: '96%', margin: '40px 0 20px 20px'}}/>
+                <Typography variant="subtitle1" gutterBottom marginLeft="20px" marginBottom="-5px" marginTop="20px">
+                    2) Second, how long do we have?
+                </Typography>
+                <Grid item xs={12} container justifyContent="center">
                     <LocalizationProvider dateAdapter={AdapterDayjs}>
-                    <StaticDatePicker
-                        orientation='landscape'
-                        disableHighlightToday
-                        disablePast
-                        onChange={formik.handleChange}
-                        value={formik.values.dateGoal}
-                    />
+                        <DatePicker
+                            disablePast
+                            label="Your deadline is:"
+                            value={formik.values.dateGoal}
+                            onChange={(day) => {
+                                formik.setFieldValue('dateGoal', day);
+                            }}
+                        />
                     </LocalizationProvider>
-                    </Box>
                 </Grid>
                 <Grid item xs={12}>
                     <Button
