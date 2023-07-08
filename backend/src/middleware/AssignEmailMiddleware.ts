@@ -5,7 +5,7 @@ import { IUser } from "../types/UserTypes.js";
 
 export const assignUserEmail = (req: RequestWithUserEmail, res: Response, next: NextFunction) => {
     if (req.url === '/api/login' || req.url === '/api/register') {
-        req.userEmail = req.body.email
+        req.userEmail = req.body.email || 'Guest'
     } else {
         const token = req.headers.authorization?.split(' ')[1]
         if (token) {
