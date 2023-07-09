@@ -17,7 +17,8 @@ function App() {
       localStorage.setItem("darkTheme", "1");
     }
   }
-  const { isLoading } = useAuthMeQuery(null, { skip:!!localStorage.getItem("accessToken")});
+  const token = localStorage.getItem("accessToken");
+  const { isLoading } = useAuthMeQuery(null, { skip:!token});
   return (
     <>
       {isLoading ? (

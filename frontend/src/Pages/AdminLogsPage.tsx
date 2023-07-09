@@ -12,6 +12,7 @@ import {
 import { ChangeEvent, MouseEvent, useState } from "react";
 import { useGetAllLogsQuery } from "../store/reducers/api-reducer";
 import { LogRow } from "../types/ApiTypes";
+import ExportExcel from "../components/ExportExel";
 
 const AdminLogsPage = () => {
     const { data, isLoading, isError } = useGetAllLogsQuery('');
@@ -118,6 +119,7 @@ const AdminLogsPage = () => {
                     onPageChange={handleChangePage}
                     onRowsPerPageChange={handleChangeRowsPerPage}
                 />
+                <ExportExcel csvData={allLogs} fileName={"logs"} />
             </TableContainer>
         </div>
     );

@@ -22,14 +22,16 @@ export const apiReducer = createApi({
 
     }),
     endpoints: (builder) => ({
-        authMe: builder.query<IUser, null>({
+        authMe: builder.query<{ status: 'OK', user: IUser }, null>({
             query: () => ({
                 url: `/auth-me`,
             }),
             async onQueryStarted(args, { dispatch, queryFulfilled }) {
                 try {
                     const { data } = await queryFulfilled
-                    dispatch(setUser(data))
+                    console.log(data);
+                    
+                    dispatch(setUser(data.user))
                 } catch (error) {
                     console.log(error)
                 }

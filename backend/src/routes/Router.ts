@@ -23,5 +23,5 @@ router.get('/get-goal', authMiddleware, GoalController.getGoal)
 router.post('/update-bmi', authMiddleware, UserBmiController.updateBMI)
 router.get('/get-mbi-history', authMiddleware, UserBmiController.getMbiHistory)
 //AdminController
-router.get('/get-all-logs',/*CheckRoleMW('Admin'),*/ AdminController.getAllLogs)
+router.get('/get-all-logs',CheckRoleMW('Admin'), AdminController.getAllLogs)
 export default router

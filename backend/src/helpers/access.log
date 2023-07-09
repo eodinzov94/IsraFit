@@ -37,3 +37,17 @@ admin@gmail.com 2023-07-09T19:55:44.180Z POST /api/register 200
 admin@gmail.com 2023-07-09T19:56:38.460Z POST /api/login 200
 admin@gmail.com 2023-07-09T19:59:48.913Z POST /api/login 200
 admin@gmail.com 2023-07-09T20:01:25.043Z POST /api/login 200
+admin@gmail.com 2023-07-09T20:07:07.386Z POST /api/login 200
+admin@gmail.com 2023-07-09T20:21:47.348Z POST /api/login 200
+admin@gmail.com 2023-07-09T20:25:34.570Z POST /api/login 200
+admin@gmail.com 2023-07-09T20:40:42.925Z GET /api/auth-me 200
+admin@gmail.com 2023-07-09T20:40:59.345Z POST /api/login 200
+admin@gmail.com 2023-07-09T20:41:51.908Z GET /api/auth-me 304
+admin@gmail.com 2023-07-09T20:41:54.121Z GET /api/auth-me 304
+admin@gmail.com 2023-07-09T20:41:56.162Z GET /api/auth-me 304
+admin@gmail.com 2023-07-09T20:42:04.522Z POST /api/login 200
+admin@gmail.com 2023-07-09T20:42:54.401Z GET /api/auth-me 304
+admin@gmail.com 2023-07-09T20:43:03.763Z GET /api/auth-me 304
+admin@gmail.com 2023-07-09T20:43:13.206Z GET /api/auth-me 304
+admin@gmail.com 2023-07-09T20:45:06.583Z GET /api/auth-me 304
+admin@gmail.com 2023-07-09T20:45:37.067Z GET /api/auth-me 304
