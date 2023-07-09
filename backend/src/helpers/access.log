@@ -7,3 +7,12 @@ test@email.test 2023-07-08T19:05:08.012Z POST /api/update-user-data 200
 Guest 2023-07-08T19:14:50.757Z POST /api/login 200
 tes2t@email.test 2023-07-08T19:15:23.076Z POST /api/login 200
 test3@email.test 2023-07-08T19:15:42.829Z POST /api/register 200
+Guest 2023-07-09T18:31:51.530Z POST /api/user/login 404
+Guest 2023-07-09T18:31:54.767Z POST /api/user/login 404
+Guest 2023-07-09T18:32:04.064Z POST /api/user/login 404
+test@test.test 2023-07-09T18:32:45.561Z POST /api/login 403
+test@test.test 2023-07-09T18:32:52.756Z POST /api/login 403
+test2@test.test 2023-07-09T18:33:00.403Z POST /api/login 403
+eodinzov94@gmail.com 2023-07-09T18:50:02.406Z POST /api/register 404
+eodinzov94@gmail.com 2023-07-09T18:51:12.014Z POST /api/register 404
+test4@email.test 2023-07-09T18:52:13.063Z POST /api/register 404

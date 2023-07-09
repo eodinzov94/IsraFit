@@ -1,4 +1,5 @@
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
+import { Alert, LinearProgress, Snackbar } from '@mui/material';
 import Avatar from '@mui/material/Avatar';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
@@ -9,8 +10,11 @@ import Typography from '@mui/material/Typography';
 import { useFormik } from 'formik';
 import { z } from 'zod';
 import { toFormikValidationSchema } from 'zod-formik-adapter';
+import { useLoginMutation } from '../store/reducers/api-reducer';
+import { isErrorWithDataAndMessage } from '../helpers/helpers';
 
 export default function LoginPage() {
+    const [loginUser, { error, isLoading, isError }] = useLoginMutation()
     const LoginSchema = z.object({
         email: z
             .string({ required_error: "Please enter your email" })
@@ -26,14 +30,19 @@ export default function LoginPage() {
         },
         validationSchema: toFormikValidationSchema(LoginSchema),
         onSubmit: values => {
-            // Handle Submit
-            console.log(values);
+            loginUser(values);
         },
     });
 
 
     return (
         <Container component="main" maxWidth="xs">
+            <Snackbar open={isError} autoHideDuration={7000} anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }} >
+                <Alert  severity="error" sx={{ width: '100%' }}>
+                    {isErrorWithDataAndMessage(error) && error.data.message || 'Something went wrong'}
+                </Alert>
+            </Snackbar>
+            {isLoading && <LinearProgress />}
             <CssBaseline />
             <Box
                 sx={{
@@ -92,7 +101,7 @@ export default function LoginPage() {
                         type="submit"
                         fullWidth
                         variant="contained"
-                        sx={{ mt: 3, mb: 2 ,color: 'white'}}
+                        sx={{ mt: 3, mb: 2, color: 'white' }}
                     >
                         Sign In
                     </Button>

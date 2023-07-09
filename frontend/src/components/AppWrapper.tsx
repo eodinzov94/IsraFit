@@ -1,6 +1,6 @@
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import MenuIcon from '@mui/icons-material/Menu';
-import { FormControlLabel, Switch } from '@mui/material';
+import { FormControlLabel, ListItemButton, ListItemText, Switch } from '@mui/material';
 import MuiAppBar, { AppBarProps as MuiAppBarProps } from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
@@ -14,7 +14,11 @@ import Typography from '@mui/material/Typography';
 import { styled } from '@mui/material/styles';
 import { FC, useState } from 'react';
 import FitnessCenterIcon from '@mui/icons-material/FitnessCenter';
-import { mainListItems, secondaryListItems, topListItems } from './Items';
+import { mainListItems, secondaryListItems, topListItemsGuest } from './Items';
+import { useAppDispatch, useAppSelector } from '../store/hooks';
+import { logout, selectAuthentication } from '../store/reducers/auth-reducer';
+import LogoutIcon from '@mui/icons-material/Logout';
+import { Link } from 'react-router-dom';
 const drawerWidth = 240;
 
 interface AppBarProps extends MuiAppBarProps {
@@ -76,6 +80,8 @@ const AppWrapper: FC<AppWrapperProps> = ({ children, setDarkThemeSelected, darkT
     const toggleDrawer = () => {
         setOpen(!open);
     };
+    const { user, isLoggedIn } = useAppSelector(selectAuthentication)
+    const dispatch = useAppDispatch();
 
     return (
         <Box sx={{ display: 'flex' }}>
@@ -86,18 +92,19 @@ const AppWrapper: FC<AppWrapperProps> = ({ children, setDarkThemeSelected, darkT
                         pr: '24px', // keep right padding when drawer closed
                     }}
                 >
-                    <IconButton
-                        edge="start"
-                        color="inherit"
-                        aria-label="open drawer"
-                        onClick={toggleDrawer}
-                        sx={{
-                            marginRight: '36px',
-                            ...(open && { display: 'none' }),
-                        }}
-                    >
-                        <MenuIcon />
-                    </IconButton>
+                    {isLoggedIn &&
+                        <IconButton
+                            edge="start"
+                            color="inherit"
+                            aria-label="open drawer"
+                            onClick={toggleDrawer}
+                            sx={{
+                                marginRight: '36px',
+                                ...(open && { display: 'none' }),
+                            }}
+                        >
+                            <MenuIcon />
+                        </IconButton>}
                     <Typography
                         component="h1"
                         variant="h6"
@@ -105,13 +112,19 @@ const AppWrapper: FC<AppWrapperProps> = ({ children, setDarkThemeSelected, darkT
                         noWrap
                         sx={{ flexGrow: 1, display: { xs: 'none', sm: 'block' }, color: 'white', textAlign: 'center' }}
                     >
-                        < FitnessCenterIcon />
-                        &nbsp;IsraFit&nbsp;
-                        < FitnessCenterIcon sx={{rotate: '90deg'}}/>
+                        <Box component={Link} to="/" sx={{ color: 'white', textDecoration: 'none' }}>
+                            < FitnessCenterIcon />
+                            &nbsp;IsraFit&nbsp;
+                            < FitnessCenterIcon sx={{ rotate: '90deg' }} />
+                        </Box>
                     </Typography>
-
                     <List component="nav" sx={{ display: 'flex', flexDirection: 'row', gap: '5px' }}>
-                        {topListItems}
+                        {!isLoggedIn ? topListItemsGuest :
+                            <ListItemButton onClick={() => dispatch(logout())} color='secondary' sx={{ border: '1px solid white', borderRadius: '5px', width: { xs: '60px', sm: '120px' } }}    >
+                                <ListItemText primary="Logout" sx={{ color: 'white', textAlign: { xs: 'none', sm: 'center' }, visibility: { xs: 'hidden', sm: 'visible' } }} />
+                                <LogoutIcon color='warning' />
+                            </ListItemButton>
+                        }
                     </List>
                     <FormControlLabel
                         control={<Switch checked={darkThemeSelected}
@@ -122,8 +135,8 @@ const AppWrapper: FC<AppWrapperProps> = ({ children, setDarkThemeSelected, darkT
                         sx={{ color: 'white' }}
                     />
                 </Toolbar>
-            </AppBar>
-            <Drawer variant="permanent" open={open}>
+            </AppBar >
+            {isLoggedIn && <Drawer variant="permanent" open={open}>
                 <Toolbar
                     sx={{
                         display: 'flex',
@@ -142,7 +155,7 @@ const AppWrapper: FC<AppWrapperProps> = ({ children, setDarkThemeSelected, darkT
                     <Divider sx={{ my: 1 }} />
                     {secondaryListItems}
                 </List>
-            </Drawer>
+            </Drawer>}
             <Box
                 component="main"
                 sx={{
@@ -160,7 +173,7 @@ const AppWrapper: FC<AppWrapperProps> = ({ children, setDarkThemeSelected, darkT
                     {children}
                 </Container>
             </Box>
-        </Box>
+        </Box >
     );
 }
 export default AppWrapper

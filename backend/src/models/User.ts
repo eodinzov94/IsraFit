@@ -32,7 +32,7 @@ User.init({
     role: { type: DataTypes.STRING, defaultValue: 'User' },
     weight: { type: DataTypes.FLOAT, allowNull: false },
     height: { type: DataTypes.FLOAT, allowNull: false },
-    physicalActivity: { type: DataTypes.INTEGER, allowNull: false },
+    physicalActivity: { type: DataTypes.FLOAT, allowNull: false },
 
 }, {
     timestamps: true,

@@ -1,5 +1,5 @@
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
-import { FormControlLabel, FormLabel, Grid, Radio, RadioGroup } from '@mui/material';
+import { Alert, FormControlLabel, FormLabel, Grid, LinearProgress, MenuItem, Radio, RadioGroup, Snackbar } from '@mui/material';
 import Avatar from '@mui/material/Avatar';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
@@ -10,8 +10,11 @@ import Typography from '@mui/material/Typography';
 import { useFormik } from 'formik';
 import { z } from 'zod';
 import { toFormikValidationSchema } from 'zod-formik-adapter';
+import { useRegisterMutation } from '../store/reducers/api-reducer';
+import { isErrorWithDataAndMessage } from '../helpers/helpers';
 
 export default function RegisterPage() {
+    const [registerUser, { error, isLoading, isError }] = useRegisterMutation()
     const RegisterSchema = z.object({
         email: z
             .string({ required_error: "Please enter your email" })
@@ -19,10 +22,25 @@ export default function RegisterPage() {
         password: z
             .string({ required_error: "Please enter your password" }),
         confirmPassword: z.string({ required_error: "Please confirm your password" }),
-        birthYear: z.number(),
-        height: z.number(),
-        firstName: z.string(),
-        lastName: z.string(),
+        gender: z.enum(['Female', 'Male']),
+        firstName: z
+            .string({ required_error: "Please enter your first name" })
+            .min(2, "First name must be at least 2 characters long")
+            .max(50, "First name must be at most 50 characters long"),
+        lastName: z
+            .string({ required_error: "Please enter your last name" })
+            .min(2, "Last name must be at least 2 characters long")
+            .max(50, "Last name must be at most 50 characters long"),
+        weight: z.number({ required_error: "Please enter your weight" })
+            .gte(35, "You cannot be under 35kg!")
+            .lte(250, "You must be at most 250kg!"),
+        height: z.number({ required_error: "Please enter your height" })
+            .gte(120, "You cannot be under 120cm")
+            .lte(250, "You cannot be over 250cm"),
+        physicalActivity: z.number({ required_error: "Please choose a physical activity level" }),
+        birthYear: z.number({ required_error: "Please enter your age" })
+            .lte(new Date().getFullYear()-18, "You must be at least 18 years old")
+            .gte(new Date().getFullYear()-100, "You, sadly, must be at most 100 years old")
     }).refine((data) => data.password === data.confirmPassword, {
         message: "Passwords don't match",
         path: ["confirmPassword"],
@@ -33,21 +51,38 @@ export default function RegisterPage() {
             password: '',
             confirmPassword: '',
             birthYear: '',
-            gender: 'F',
+            gender: 'Male',
+            weight: '',
             height: '',
             firstName: '',
             lastName: '',
+            physicalActivity: '',
         },
         validationSchema: toFormikValidationSchema(RegisterSchema),
         onSubmit: values => {
-            // Handle Submit
-            console.log(values);
+            registerUser({
+                email: values.email,
+                password: values.password,
+                firstName: values.firstName,
+                lastName: values.lastName,
+                birthYear: Number(values.birthYear),
+                height: Number(values.height),
+                gender: values.gender as 'Female' | 'Male',
+                physicalActivity: Number(values.physicalActivity),
+                weight: Number(values.weight)
+            });
         },
     });
 
 
     return (
         <Container component="main" maxWidth="xs">
+            <Snackbar open={isError} autoHideDuration={7000} anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }} >
+                <Alert severity="error" sx={{ width: '100%' }}>
+                    {isErrorWithDataAndMessage(error) && error.data.message || 'Something went wrong'}
+                </Alert>
+            </Snackbar>
+            {isLoading && <LinearProgress />}
             <CssBaseline />
             <Box
                 sx={{
@@ -200,28 +235,64 @@ export default function RegisterPage() {
                                 required
                             />
                         </Grid>
+                        <Grid item xs={12} sm={6}>
+                            <TextField
+                                fullWidth
+                                margin='normal'
+                                variant="outlined"
+                                name="weight"
+                                label="Weight (kg)"
+                                type="number"
+                                onChange={formik.handleChange}
+                                onBlur={formik.handleBlur}
+                                value={formik.values.weight}
+                                error={formik.touched.weight && Boolean(formik.errors.weight)}
+                                helperText={formik.touched.weight && formik.errors.weight}
+                                InputLabelProps={{
+                                    shrink: true,
+                                }}
+                                required
+                            />
+                        </Grid>
+                        <Grid item xs={12} sm={6}>
+                            <FormLabel>Gender</FormLabel>
+                            <RadioGroup
+                                row
+                                name='gender'
+                                value={formik.values.gender}
+                                onChange={formik.handleChange}
+                            >
+                                <FormControlLabel value="Female" control={<Radio />} label="Female" />
+                                <FormControlLabel value="Male" control={<Radio />} label="Male" />
+                            </RadioGroup>
+                        </Grid>
                     </Grid>
-                    <Grid item xs={12}>
-                    <FormLabel>Gender</FormLabel>
-                        <RadioGroup
-                            row
-                            name='gender'
-                            value={formik.values.gender}
+                    <Grid item xs={12} sm={6} sx={{ mt: 2 }}>
+                        <TextField
+                            required
+                            fullWidth
+                            select
+                            name="physicalActivity"
+                            label="Physical Activity Level"
                             onChange={formik.handleChange}
+                            onBlur={formik.handleBlur}
+                            error={formik.touched.physicalActivity && Boolean(formik.errors.physicalActivity)}
+                            helperText={formik.touched.physicalActivity && formik.errors.physicalActivity}
+                            value={formik.values.physicalActivity}
                         >
-                            <FormControlLabel value="F" control={<Radio />} label="Female" />
-                            <FormControlLabel value="M" control={<Radio />} label="Male" />
-                        </RadioGroup>
+                            <MenuItem value={1.2}>Not very active</MenuItem>
+                            <MenuItem value={1.375}>Somewhat active</MenuItem>
+                            <MenuItem value={1.725}>Very active</MenuItem>
+                            <MenuItem value={1.9}>Extremely active</MenuItem>
+                        </TextField>
                     </Grid>
                     <Button
                         type="submit"
                         fullWidth
                         variant="contained"
-                        sx={{ mt: 3, mb: 2 ,color: 'white'}}>
+                        sx={{ mt: 3, mb: 2, color: 'white' }}>
                         Register
                     </Button>
-                    <Grid container justifyContent="flex-end">
-                    </Grid>
                 </Box>
             </Box>
         </Container>

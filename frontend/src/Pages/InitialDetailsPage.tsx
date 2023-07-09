@@ -1,11 +1,11 @@
 import Avatar from "@mui/material/Avatar";
-import {z} from "zod";
-import {useFormik} from "formik";
-import {toFormikValidationSchema} from "zod-formik-adapter";
-import {Box, Button, Container, CssBaseline, Grid, MenuItem, Stack, Switch, TextField, Typography} from '@mui/material';
+import { z } from "zod";
+import { useFormik } from "formik";
+import { toFormikValidationSchema } from "zod-formik-adapter";
+import { Box, Button, Container, CssBaseline, Grid, MenuItem, Stack, Switch, TextField, Typography } from '@mui/material';
 import WavingHandIcon from '@mui/icons-material/WavingHand';
-import {ChangeEvent} from "react";
-import {useNavigate} from "react-router-dom";
+import { ChangeEvent } from "react";
+import { useNavigate } from "react-router-dom";
 
 export default function InitialDetailsPage() {
     /*
@@ -18,22 +18,22 @@ export default function InitialDetailsPage() {
     const navigate = useNavigate()
     const DetailsSchema = z.object({
         firstName: z
-            .string({required_error: "Please enter your first name"})
+            .string({ required_error: "Please enter your first name" })
             .min(2, "First name must be at least 2 characters long")
             .max(50, "First name must be at most 50 characters long"),
         lastName: z
-            .string({required_error: "Please enter your last name"})
+            .string({ required_error: "Please enter your last name" })
             .min(2, "Last name must be at least 2 characters long")
             .max(50, "Last name must be at most 50 characters long"),
-        weight: z.number({required_error: "Please enter your weight"})
+        weight: z.number({ required_error: "Please enter your weight" })
             .gte(35, "You cannot be under 35kg!")
             .lte(250, "You must be at most 250kg!"),
-        height: z.number({required_error: "Please enter your height"})
+        height: z.number({ required_error: "Please enter your height" })
             .gte(120, "You cannot be under 120cm")
             .lte(250, "You cannot be over 250cm"),
         gender: z.string(),
-        pal: z.number({required_error: "Please choose a physical activity level"}),
-        age: z.number({required_error: "Please enter your age"})
+        pal: z.number({ required_error: "Please choose a physical activity level" }),
+        age: z.number({ required_error: "Please enter your age" })
             .gte(18, "You must be at least 18 years old")
             .lte(100, "You, sadly, must be at most 100 years old")
 
@@ -47,7 +47,7 @@ export default function InitialDetailsPage() {
 
             //TODO: calculate & save BMI in DB, formula: weight / ((height/100)^2)
             // TODO - save values in DB
-            navigate('/goal-set', {state: {weight: values.weight, gender: values.gender, TDEE: values.TDEE}})
+            navigate('/goal-set', { state: { weight: values.weight, gender: values.gender, TDEE: values.TDEE } })
         },
     });
 
@@ -55,7 +55,7 @@ export default function InitialDetailsPage() {
         formik.setFieldValue('gender', e.target.checked ? 'Male' : 'Female')
     }
     return (<Container component="main" maxWidth="sm">
-        <CssBaseline/>
+        <CssBaseline />
         <Box
             sx={{
                 backgroundColor: '#fff',
@@ -67,8 +67,8 @@ export default function InitialDetailsPage() {
                 alignItems: 'center'
             }}
         >
-            <Avatar sx={{m: 1, bgcolor: 'primary.main'}}>
-                <WavingHandIcon/>
+            <Avatar sx={{ m: 1, bgcolor: 'primary.main' }}>
+                <WavingHandIcon />
             </Avatar>
             <Typography variant="h6" gutterBottom>
                 Welcome to IsraFit!
@@ -178,9 +178,9 @@ export default function InitialDetailsPage() {
                     <Stack direction="row" spacing={1} alignItems="center">
                         <Typography>Female</Typography>
                         <Switch id="gender" name="gender" defaultChecked={true}
-                                onChange={handleChange}
-                                onBlur={formik.handleBlur}
-                                color="default"/>
+                            onChange={handleChange}
+                            onBlur={formik.handleBlur}
+                            color="default" />
                         <Typography>Male</Typography>
                     </Stack>
                 </Grid>
@@ -189,7 +189,7 @@ export default function InitialDetailsPage() {
                         type="submit"
                         fullWidth
                         variant="contained"
-                        sx={{mt: 3, mb: 2, color: 'white'}}
+                        sx={{ mt: 3, mb: 2, color: 'white' }}
                     >
                         Continue
                     </Button>
