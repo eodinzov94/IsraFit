@@ -30,7 +30,7 @@ class AdminController {
                     status,
                 });
             }
-            res.json(logRows);
+            res.json({status:'OK',allLogs:logRows});
         } catch (e) { 
             console.log(e)
             next(ApiError.internal('Something went wrong'))

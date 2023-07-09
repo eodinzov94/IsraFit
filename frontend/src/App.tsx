@@ -6,7 +6,17 @@ import AppWrapper from "./components/AppWrapper";
 import { AppRouter } from "./routes/AppRouter";
 import { useAuthMeQuery } from "./store/reducers/api-reducer";
 function App() {
-  const [darkThemeSelected, setDarkThemeSelected] = useState(false);
+  const savedThemeSelected = localStorage.getItem("darkTheme") || "0";
+  const [darkThemeSelected, setDarkThemeSelected] = useState(savedThemeSelected === "1");
+  const setTheme = () => {
+    if (darkThemeSelected) {
+      setDarkThemeSelected(false);
+      localStorage.setItem("darkTheme", "0");
+    } else {
+      setDarkThemeSelected(true);
+      localStorage.setItem("darkTheme", "1");
+    }
+  }
   const { isLoading } = useAuthMeQuery(null, { skip:!!localStorage.getItem("accessToken")});
   return (
     <>
@@ -38,7 +48,7 @@ function App() {
       ) : (
         <ThemeProvider theme={darkThemeSelected ? darkTheme : lightTheme}>
           <AppWrapper
-            setDarkThemeSelected={setDarkThemeSelected}
+            setDarkThemeSelected={setTheme}
             darkThemeSelected={darkThemeSelected}
           >
             <AppRouter />

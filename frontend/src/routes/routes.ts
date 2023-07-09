@@ -1,3 +1,4 @@
+import AdminLogsPage from "../Pages/AdminLogsPage";
 import FoodTablePage from "../Pages/FoodTablePage";
 import GoalSetPage from "../Pages/GoalSetPage";
 import InitialDetailsPage from "../Pages/InitialDetailsPage";
@@ -29,7 +30,6 @@ export const publicRoutes: IRoute[] = [
     { path: RouteNames.LOGIN, element: LoginPage },
     { path: RouteNames.REGISTER, element: RegisterPage },
     { path: RouteNames.HOME, element: FoodTablePage },
-
 ]
 
 export const userRoutes: IRoute[] = [
@@ -39,9 +39,9 @@ export const userRoutes: IRoute[] = [
     { path: RouteNames.CALORIES_CHART, element: CaloriesChart },
     { path: RouteNames.FOOD_TABLE, element: FoodTablePage },
     { path: RouteNames.HOME, element: FoodTablePage },
+
 ]
 
 export const adminRoutes: IRoute[] = [
-    { path: RouteNames.HOME, element: FoodTablePage },
-    // {path: RouteNames.ADMIN_LOGS, element: AdminLogsPage},
+    { path: RouteNames.HOME, element: AdminLogsPage },
 ]

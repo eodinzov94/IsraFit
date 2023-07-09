@@ -45,3 +45,10 @@ export interface IUserLoginPayload {
     email: string
     password: string
 }
+export interface LogRow {
+    userEmail: string;
+    date: string;
+    method: string;
+    url: string;
+    status: string;
+}

@@ -9,10 +9,10 @@ export const AppRouter = () => {
             {!isLoggedIn && (publicRoutes.map((route) => (
                 <Route path={route.path} element={<route.element />} key={route.path} />
             )))}
-            {isLoggedIn && user?.role === "Admin" && (userRoutes.map((route) => (
+            {isLoggedIn && user?.role === "User" && (userRoutes.map((route) => (
                 <Route path={route.path} element={<route.element />} key={route.path} />
             )))}
-            {isLoggedIn && user?.role === "User" && (adminRoutes.map((route) => (
+            {isLoggedIn && user?.role === "Admin" && (adminRoutes.map((route) => (
                 <Route path={route.path} element={<route.element />} key={route.path} />
             )))}
             <Route path="*" element={<Navigate replace to={RouteNames.HOME} />} />

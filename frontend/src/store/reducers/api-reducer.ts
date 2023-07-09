@@ -3,7 +3,8 @@ import {
     IUser,
     IUserLoginPayload,
     IUserRegisterPayload,
-    IUserUpdatePayload
+    IUserUpdatePayload,
+    LogRow
 } from '../../types/ApiTypes'
 import { setUser } from './auth-reducer'
 
@@ -94,6 +95,13 @@ export const apiReducer = createApi({
                 }
             },
         }),
+
+        getAllLogs: builder.query<{ status: string, allLogs: LogRow[] }, ''>({
+            query: () => ({
+                url: '/get-all-logs',
+                method: 'GET'
+            }),
+        }),
     }),
 })
 
@@ -101,5 +109,6 @@ export const {
     useAuthMeQuery,
     useLoginMutation,
     useRegisterMutation,
-    useEditProfileMutation
+    useEditProfileMutation,
+    useGetAllLogsQuery
 } = apiReducer

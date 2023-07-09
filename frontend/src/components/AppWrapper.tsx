@@ -92,7 +92,7 @@ const AppWrapper: FC<AppWrapperProps> = ({ children, setDarkThemeSelected, darkT
                         pr: '24px', // keep right padding when drawer closed
                     }}
                 >
-                    {isLoggedIn &&
+                    {(isLoggedIn && user?.role !== 'Admin') &&
                         <IconButton
                             edge="start"
                             color="inherit"
@@ -114,7 +114,7 @@ const AppWrapper: FC<AppWrapperProps> = ({ children, setDarkThemeSelected, darkT
                     >
                         <Box component={Link} to="/" sx={{ color: 'white', textDecoration: 'none' }}>
                             < FitnessCenterIcon />
-                            &nbsp;IsraFit&nbsp;
+                            {isLoggedIn ? ` Welcome, ${user?.firstName} ` : ' IsraFit '}
                             < FitnessCenterIcon sx={{ rotate: '90deg' }} />
                         </Box>
                     </Typography>
@@ -136,7 +136,7 @@ const AppWrapper: FC<AppWrapperProps> = ({ children, setDarkThemeSelected, darkT
                     />
                 </Toolbar>
             </AppBar >
-            {isLoggedIn && <Drawer variant="permanent" open={open}>
+            {(isLoggedIn && user?.role !== 'Admin') && <Drawer variant="permanent" open={open}>
                 <Toolbar
                     sx={{
                         display: 'flex',
