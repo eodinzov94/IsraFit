@@ -11,7 +11,7 @@ import { setUser } from './auth-reducer'
 export const apiReducer = createApi({
     reducerPath: 'apiReducer',
     baseQuery: fetchBaseQuery({
-        baseUrl: process.env.VITE_BACK_URL || 'http://localhost:3001/api',
+        baseUrl: import.meta.env.VITE_BASE_URL || 'http://localhost:3001/api',
         prepareHeaders: (headers, { endpoint }) => {
             const token = localStorage.getItem('accessToken')
             if (token && endpoint !== 'login') {
