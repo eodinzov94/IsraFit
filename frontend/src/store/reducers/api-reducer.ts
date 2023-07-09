@@ -11,7 +11,7 @@ import { setUser } from './auth-reducer'
 export const apiReducer = createApi({
     reducerPath: 'apiReducer',
     baseQuery: fetchBaseQuery({
-        baseUrl: 'http://localhost:3001/api',
+        baseUrl: process.env.REACT_APP_BACK_URL || 'http://localhost:3001/api',
         prepareHeaders: (headers, { endpoint }) => {
             const token = localStorage.getItem('accessToken')
             if (token && endpoint !== 'login') {
