@@ -8,6 +8,7 @@ export interface IUser {
     gender: "Male" | "Female",
     weight: number
     height: number
+    TDEE: number
     physicalActivity: number
     birthYear: number
 }
@@ -27,6 +28,7 @@ export interface IUserRegisterPayload {
     height: number
     physicalActivity: number
     birthYear: number
+    TDEE: number
 }
 
 export interface IUserUpdatePayload {

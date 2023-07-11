@@ -9,12 +9,17 @@ import {DatePicker, LocalizationProvider} from "@mui/x-date-pickers";
 import dayjs, {Dayjs} from "dayjs";
 import {AdapterDayjs} from "@mui/x-date-pickers/AdapterDayjs";
 import {ChangeEvent, useState} from "react";
+import {useAuthMeQuery} from "../store/reducers/api-reducer";
+import {IUser} from "../types/ApiTypes";
 
 export default function GoalSetPage() {
     const [alertMessage, setMessage] = useState<string>('')
     const navigate = useNavigate()
-    const location = useLocation()
-    const {weight, gender, TDEE} = location.state // TODO: Replace with user data from backend, or stick with location?
+    const [user,setUser] = useState<IUser>({} as IUser)
+    const {data,isLoading,isError } = useAuthMeQuery(null);
+    if(!isError && data) {
+        setUser(data.user)
+    }
     const GoalSchema = z.object({
         weightGoal: z.number({required_error: "Please choose a goal!"})
             .gte(35, "Weighing below 35kg is not recommended")
@@ -30,9 +35,9 @@ export default function GoalSetPage() {
                 return
 
             // Algebra, from formulas
-            const totalCalorieDeficit = Math.abs((weight - values.weightGoal) * 7700);
+            const totalCalorieDeficit = Math.abs((user.weight - values.weightGoal) * 7700);
             const avgDailyDeficit = totalCalorieDeficit / values.dateGoal.diff(dayjs(), 'days');
-            const TDEEDeficit = TDEE - avgDailyDeficit
+            const TDEEDeficit = user.TDEE - avgDailyDeficit
 
             // validate bad life choices by the user.
             checkDeficit(TDEEDeficit)
@@ -56,9 +61,9 @@ export default function GoalSetPage() {
 
     /**Check if the user chose values that are too extreme - we can't allow too rapid weight change, it's unhealthy.*/
     const checkDeficit = (TDEEDeficit: number) => {
-        if (TDEEDeficit < (gender === 'Male' ? 1500 : 1200)) {
+        if (TDEEDeficit < (user.gender === 'Male' ? 1500 : 1200)) {
             setMessage('WARNING! This weight loss plan is too aggressive!')
-        } else if (TDEEDeficit > (gender === 'Male' ? 2000 : 1600)) {
+        } else if (TDEEDeficit > (user.gender === 'Male' ? 2000 : 1600)) {
             setMessage(`WARNING! You're risking over-eating!`)
         }
     }

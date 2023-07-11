@@ -12,6 +12,7 @@ import { z } from 'zod';
 import { toFormikValidationSchema } from 'zod-formik-adapter';
 import { useRegisterMutation } from '../store/reducers/api-reducer';
 import { isErrorWithDataAndMessage } from '../helpers/helpers';
+import dayjs from "dayjs";
 
 export default function RegisterPage() {
     const [registerUser, { error, isLoading, isError }] = useRegisterMutation()
@@ -50,16 +51,19 @@ export default function RegisterPage() {
             email: '',
             password: '',
             confirmPassword: '',
-            birthYear: '',
+            birthYear: dayjs().year() - 18,
             gender: 'Male',
-            weight: '',
-            height: '',
+            weight: 35,
+            height: 120,
             firstName: '',
             lastName: '',
-            physicalActivity: '',
+            physicalActivity: 1.2,
+            TDEE: 0
         },
         validationSchema: toFormikValidationSchema(RegisterSchema),
         onSubmit: values => {
+            const BMR = (10 * values.weight + 6.25 * values.height - 5 * (dayjs().year() -values.birthYear)) + (values.gender === 'Male' ? 5 : -161); //formula
+            values.TDEE = BMR * values.physicalActivity; //total daily energy expenditure formula
             registerUser({
                 email: values.email,
                 password: values.password,
@@ -69,7 +73,8 @@ export default function RegisterPage() {
                 height: Number(values.height),
                 gender: values.gender as 'Female' | 'Male',
                 physicalActivity: Number(values.physicalActivity),
-                weight: Number(values.weight)
+                weight: Number(values.weight),
+                TDEE: values.TDEE
             });
         },
     });

@@ -1,7 +1,6 @@
 import AdminLogsPage from "../Pages/AdminLogsPage";
 import FoodTablePage from "../Pages/FoodTablePage";
 import GoalSetPage from "../Pages/GoalSetPage";
-import InitialDetailsPage from "../Pages/InitialDetailsPage";
 import LoginPage from "../Pages/LoginPage";
 import RegisterPage from "../Pages/RegisterPage";
 import BmiChart from "../components/BmiChart";
@@ -34,7 +33,6 @@ export const publicRoutes: IRoute[] = [
 
 export const userRoutes: IRoute[] = [
     { path: RouteNames.BMI_CHART, element: BmiChart },
-    { path: RouteNames.INITIAL_DETAILS, element: InitialDetailsPage }, //TODO: Move these to private user routes
     { path: RouteNames.GOAL_SET, element: GoalSetPage },
     { path: RouteNames.CALORIES_CHART, element: CaloriesChart },
     { path: RouteNames.FOOD_TABLE, element: FoodTablePage },
