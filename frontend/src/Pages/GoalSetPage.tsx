@@ -49,11 +49,11 @@ export default function GoalSetPage() {
 
   const formik = useFormik({
     initialValues: {
-      weightGoal:"", dateGoal: dayjs().add(30, 'days')
+      weightGoal:user.weight-1, dateGoal: dayjs().add(30, 'days')
     }, validationSchema: toFormikValidationSchema(GoalSchema), onSubmit: values => {
 
       // Algebra, from formulas
-      const totalCalorieDeficit = Math.abs((user.weight - Number(values.weightGoal)) * 7700)
+      const totalCalorieDeficit = Math.abs((user.weight -values.weightGoal) * 7700)
       const avgDailyDeficit = totalCalorieDeficit / values.dateGoal.diff(dayjs(), 'days')
       const TDEEDeficit = user.TDEE - avgDailyDeficit
 
@@ -83,7 +83,7 @@ export default function GoalSetPage() {
   const checkDeficit = (TDEEDeficit: number) => {
     const lowerLimit = user.gender === 'Male' ? 1500 : 1200
     const upperLimit = user.gender === 'Male' ? 2000 : 1600
-    if(Number(formik.values.weightGoal) === user.weight) {
+    if(formik.values.weightGoal === user.weight) {
       setMessage('You are already at your goal!')
     }else if (TDEEDeficit < lowerLimit) {
       setMessage('WARNING! This weight loss plan is too aggressive!')
