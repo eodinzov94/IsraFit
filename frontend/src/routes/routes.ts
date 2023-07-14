@@ -14,7 +14,6 @@ export interface IRoute {
 
 export enum RouteNames {
     GOAL_SET = '/goal-set',
-    INITIAL_DETAILS = "/init",
     REGISTER = '/register',
     HOME = '/',
     LOGIN = '/login',
