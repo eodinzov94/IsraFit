@@ -58,7 +58,7 @@ export const secondaryListItems = (
             </ListItemIcon>
             <ListItemText primary="Target for BMI" />
         </ListItemButton>
-        <ListItemButton>
+        <ListItemButton component={Link} to="/goal-set">
             <ListItemIcon>
                 <AssignmentIcon />
             </ListItemIcon>

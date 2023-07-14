@@ -49,11 +49,11 @@ export default function GoalSetPage() {
 
   const formik = useFormik({
     initialValues: {
-      weightGoal: 35, dateGoal: dayjs(),
+      weightGoal:"", dateGoal: dayjs().add(30, 'days')
     }, validationSchema: toFormikValidationSchema(GoalSchema), onSubmit: values => {
 
       // Algebra, from formulas
-      const totalCalorieDeficit = Math.abs((user.weight - values.weightGoal) * 7700)
+      const totalCalorieDeficit = Math.abs((user.weight - Number(values.weightGoal)) * 7700)
       const avgDailyDeficit = totalCalorieDeficit / values.dateGoal.diff(dayjs(), 'days')
       const TDEEDeficit = user.TDEE - avgDailyDeficit
 
@@ -69,7 +69,7 @@ export default function GoalSetPage() {
       setMessage('Please enter a valid number')
     else if (!(goal > 50 && goal < 150)) {
       setMessage('This weight is unhealthy, please reconsider!')
-    } else if (goal - user.weight === 0) {
+    } else if (goal === user.weight ) {
       setMessage('You are already at your goal!')
     } else {
       setMessage('')
@@ -83,11 +83,13 @@ export default function GoalSetPage() {
   const checkDeficit = (TDEEDeficit: number) => {
     const lowerLimit = user.gender === 'Male' ? 1500 : 1200
     const upperLimit = user.gender === 'Male' ? 2000 : 1600
-
-    if (TDEEDeficit < lowerLimit) {
+    if(Number(formik.values.weightGoal) === user.weight) {
+      setMessage('You are already at your goal!')
+    }else if (TDEEDeficit < lowerLimit) {
       setMessage('WARNING! This weight loss plan is too aggressive!')
     } else if (TDEEDeficit > upperLimit) {
       setMessage(`WARNING! You're risking over-eating!`)
+      
     } else {
       setCalories(TDEEDeficit)
     }
@@ -132,9 +134,14 @@ export default function GoalSetPage() {
                   onChange={onWeightChange}
                   onBlur={formik.handleBlur}
                   value={formik.values.weightGoal}
-                  error={formik.touched.weightGoal && Boolean(formik.errors.weightGoal)}
+                  error={(formik.touched.weightGoal && Boolean(formik.errors.weightGoal))}
                   helperText={alertMessage}
-                  color={alertMessage.length ? 'warning' : 'primary'}
+                  color={alertMessage.length > 0 ? 'warning' : 'primary'}
+                  FormHelperTextProps={{ sx() {
+                    return {
+                      color: 'warning.main',
+                    }
+                  },}}
                 />
               </Grid>
               <Divider style={{ width: '96%', margin: '40px 0 20px 20px' }} />
