@@ -53,9 +53,7 @@ const data = {
 const CaloriesChart = () => {
 
     return (
-        <div>
-            <Line options={options} data={data} />;
-        </div>
+            <Line options={options} data={data} />
     );
 };
 

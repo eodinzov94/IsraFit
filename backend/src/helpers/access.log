@@ -64,3 +64,9 @@ admin@gmail.com 2023-07-09T21:00:58.724Z GET /api/auth-me 304
 admin@gmail.com 2023-07-09T21:01:38.916Z GET /api/auth-me 304
 admin@gmail.com 2023-07-09T21:02:02.804Z GET /api/auth-me 304
 eodinzov94@gmail.com 2023-07-09T21:03:33.416Z POST /api/login 200
+eodinzov94@gmail.com 2023-07-14T19:31:11.373Z POST /api/login 200
+eodinzov94@gmail.com 2023-07-14T19:33:35.309Z GET /api/auth-me 304
+eodinzov94@gmail.com 2023-07-14T19:38:42.521Z GET /api/auth-me 304
+eodinzov94@gmail.com 2023-07-14T20:26:09.286Z GET /api/auth-me 304
+eodinzov94@gmail.com 2023-07-14T20:27:05.858Z GET /api/auth-me 304
+eodinzov94@gmail.com 2023-07-14T20:31:05.434Z GET /api/auth-me 304

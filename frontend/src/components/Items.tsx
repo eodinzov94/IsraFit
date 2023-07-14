@@ -12,11 +12,11 @@ import { Link } from 'react-router-dom';
 
 export const mainListItems = (
     <>
-        <ListItemButton>
+        <ListItemButton component={Link} to="/dashboard">
             <ListItemIcon>
                 <DashboardIcon />
             </ListItemIcon>
-            <ListItemText primary="Profile" />
+            <ListItemText primary="Dashboard" />
         </ListItemButton>
         <ListItemButton component={Link} to="/bmi-chart">
             <ListItemIcon>

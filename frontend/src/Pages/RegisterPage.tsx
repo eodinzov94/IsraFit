@@ -100,7 +100,7 @@ export default function RegisterPage() {
                     <LockOutlinedIcon />
                 </Avatar>
                 <Typography component="h1" variant="h5">
-                    Sign in
+                    Registration
                 </Typography>
                 <Box component="form" onSubmit={formik.handleSubmit} noValidate sx={{ mt: 1 }}>
                     <Grid container spacing={2}>

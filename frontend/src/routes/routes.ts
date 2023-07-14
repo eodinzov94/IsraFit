@@ -1,4 +1,5 @@
 import AdminLogsPage from "../Pages/AdminLogsPage";
+import DashboardPage from "../Pages/DashboardPage";
 import FoodTablePage from "../Pages/FoodTablePage";
 import GoalSetPage from "../Pages/GoalSetPage";
 import LoginPage from "../Pages/LoginPage";
@@ -21,6 +22,7 @@ export enum RouteNames {
     CALORIES_CHART = '/calories-chart',
     FOOD_TABLE = '/food-table',
     ADMIN_LOGS = '/admin-logs',
+    DASHBOARD = '/dashboard',
 }
 
 
@@ -36,6 +38,7 @@ export const userRoutes: IRoute[] = [
     { path: RouteNames.CALORIES_CHART, element: CaloriesChart },
     { path: RouteNames.FOOD_TABLE, element: FoodTablePage },
     { path: RouteNames.HOME, element: FoodTablePage },
+    { path: RouteNames.DASHBOARD, element: DashboardPage }
 
 ]
 
