@@ -109,7 +109,6 @@ const FoodTablePage = () => {
                 <TableCell data-label="Carbohydrates (gr)">{item.carbohydrates}</TableCell>
                 <TableCell data-label="Food Energy (kcal)">{item.food_energy}</TableCell>
                 <TableCell data-label="Total Sugars (gr)">{item.total_sugars}</TableCell>
-                <TableCell>+</TableCell>
               </TableRow>
             ))}
           </TableBody>

@@ -70,3 +70,6 @@ eodinzov94@gmail.com 2023-07-14T19:38:42.521Z GET /api/auth-me 304
 eodinzov94@gmail.com 2023-07-14T20:26:09.286Z GET /api/auth-me 304
 eodinzov94@gmail.com 2023-07-14T20:27:05.858Z GET /api/auth-me 304
 eodinzov94@gmail.com 2023-07-14T20:31:05.434Z GET /api/auth-me 304
+ron@ron.ron 2023-07-15T17:22:33.370Z POST /api/register 200
+ron@ron.ron 2023-07-15T17:24:50.477Z GET /api/auth-me 200
+ron@ron.ron 2023-07-15T17:31:51.086Z GET /api/auth-me 304

@@ -6,6 +6,7 @@ import LoginPage from "../Pages/LoginPage";
 import RegisterPage from "../Pages/RegisterPage";
 import BmiChart from "../components/BmiChart";
 import CaloriesChart from "../components/CaloriesChart";
+import ReportFoodPage from "../Pages/ReportFoodPage";
 
 
 export interface IRoute {
@@ -14,6 +15,7 @@ export interface IRoute {
 }
 
 export enum RouteNames {
+    REPORT_FOOD='/food-report',
     GOAL_SET = '/goal-set',
     REGISTER = '/register',
     HOME = '/',
@@ -33,6 +35,7 @@ export const publicRoutes: IRoute[] = [
 ]
 
 export const userRoutes: IRoute[] = [
+    { path: RouteNames.REPORT_FOOD, element: ReportFoodPage },
     { path: RouteNames.BMI_CHART, element: BmiChart },
     { path: RouteNames.GOAL_SET, element: GoalSetPage },
     { path: RouteNames.CALORIES_CHART, element: CaloriesChart },
