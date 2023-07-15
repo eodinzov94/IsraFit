@@ -94,11 +94,10 @@ const Profile: FC<ProfileProps> = ({ user, isSm }) => {
                     </Typography>
                     <Typography component="p" variant="subtitle2" align='left'>
                         <b>BMI:</b> TODO: 24
-                        <Tooltip title={<img src={BmiRange} alt="BMI ranges" width={350} />} placement='bottom'
-                            componentsProps={{ tooltip:{sx: { backgroundColor: 'transparent',mr:9} } }}
-                            enterTouchDelay={0}
-                        >
-                            <InfoIcon sx={{ color: 'primary.main', ml: 1, backgroundColor: 'transparent' }} />
+                        <Tooltip title={<img src={BmiRange} alt="BMI ranges" width={280} />} placement='bottom'
+                            componentsProps={{ tooltip:{sx: {backgroundColor: 'lightgray'} } }}
+                            enterTouchDelay={0}>
+                            <InfoIcon/>
                         </Tooltip>
                     </Typography>
                     <Typography component="p" variant="subtitle2" align='left' color={'primary'} sx={{ mt: 2 }}>
