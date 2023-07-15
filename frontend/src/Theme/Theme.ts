@@ -12,7 +12,8 @@ const lightTheme = createTheme({
         background: {
             default: '#fafafa', // light gray background
         },
-    }
+        
+    },
 });
 
 const darkTheme = createTheme({

@@ -1,8 +1,9 @@
-import { Avatar, Box, Button, Paper, Typography } from "@mui/material";
-import { IUser } from "../types/ApiTypes";
+import InfoIcon from '@mui/icons-material/Info';
+import { Avatar, Box, Button, Tooltip, Typography } from "@mui/material";
 import { FC, useState } from "react";
+import { IUser } from "../types/ApiTypes";
 import EditProfile from "./EditProfile";
-
+import BmiRange from "../assets/bmirange.png";
 interface ProfileProps {
     user: IUser,
     isSm: boolean
@@ -91,7 +92,15 @@ const Profile: FC<ProfileProps> = ({ user, isSm }) => {
                     <Typography component="p" variant="subtitle2" align='left'>
                         <b>Physical Activity:</b> {getPhysicalActivityStatus(user.physicalActivity)}
                     </Typography>
-
+                    <Typography component="p" variant="subtitle2" align='left'>
+                        <b>BMI:</b> TODO: 24
+                        <Tooltip title={<img src={BmiRange} alt="BMI ranges" width={350} />} placement='bottom'
+                            componentsProps={{ tooltip:{sx: { backgroundColor: 'transparent',mr:9} } }}
+                            enterTouchDelay={0}
+                        >
+                            <InfoIcon sx={{ color: 'primary.main', ml: 1, backgroundColor: 'transparent' }} />
+                        </Tooltip>
+                    </Typography>
                     <Typography component="p" variant="subtitle2" align='left' color={'primary'} sx={{ mt: 2 }}>
                         <b >Weight Goal:</b> TODO:Add
                     </Typography>
