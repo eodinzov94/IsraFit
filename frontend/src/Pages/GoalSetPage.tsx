@@ -178,7 +178,7 @@ export default function GoalSetPage() {
         :
         <Grid component='form'
           onSubmit={() => {
-            navigate('/food-table')
+            navigate('/food-table') //TODO
           }}
         >
           <Grid item xs={12} container justifyContent='center'>
