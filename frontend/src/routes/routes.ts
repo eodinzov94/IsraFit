@@ -7,6 +7,8 @@ import RegisterPage from "../Pages/RegisterPage";
 import BmiChart from "../components/BmiChart";
 import CaloriesChart from "../components/CaloriesChart";
 import ReportFoodPage from "../Pages/ReportFoodPage";
+import { Navigate } from "react-router-dom";
+import NotFoundPage from "../Pages/NotFoundPage";
 
 
 export interface IRoute {
@@ -25,6 +27,7 @@ export enum RouteNames {
     FOOD_TABLE = '/food-table',
     ADMIN_LOGS = '/admin-logs',
     DASHBOARD = '/dashboard',
+    ETC = '*',
 }
 
 
@@ -32,6 +35,7 @@ export const publicRoutes: IRoute[] = [
     { path: RouteNames.LOGIN, element: LoginPage },
     { path: RouteNames.REGISTER, element: RegisterPage },
     { path: RouteNames.HOME, element: FoodTablePage },
+    { path: RouteNames.ETC, element: NotFoundPage },
 ]
 
 export const userRoutes: IRoute[] = [
@@ -41,10 +45,12 @@ export const userRoutes: IRoute[] = [
     { path: RouteNames.CALORIES_CHART, element: CaloriesChart },
     { path: RouteNames.FOOD_TABLE, element: FoodTablePage },
     { path: RouteNames.HOME, element: FoodTablePage },
-    { path: RouteNames.DASHBOARD, element: DashboardPage }
+    { path: RouteNames.DASHBOARD, element: DashboardPage },
+    { path: RouteNames.ETC, element: NotFoundPage },
 
 ]
 
 export const adminRoutes: IRoute[] = [
     { path: RouteNames.HOME, element: AdminLogsPage },
+    { path: RouteNames.ETC, element: NotFoundPage },
 ]

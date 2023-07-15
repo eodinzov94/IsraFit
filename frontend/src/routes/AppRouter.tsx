@@ -1,7 +1,7 @@
-import { Navigate, Route, Routes } from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
 import { useAppSelector } from "../store/hooks";
 import { selectAuthentication } from "../store/reducers/auth-reducer";
-import { RouteNames, adminRoutes, publicRoutes, userRoutes } from "./routes";
+import { adminRoutes, publicRoutes, userRoutes } from "./routes";
 export const AppRouter = () => {
     const { user, isLoggedIn } = useAppSelector(selectAuthentication)
     return (
@@ -15,6 +15,5 @@ export const AppRouter = () => {
             {isLoggedIn && user?.role === "Admin" && (adminRoutes.map((route) => (
                 <Route path={route.path} element={<route.element />} key={route.path} />
             )))}
-            <Route path="*" element={<Navigate replace to={RouteNames.HOME} />} />
         </Routes>)
 };

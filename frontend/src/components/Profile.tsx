@@ -1,6 +1,7 @@
 import { Avatar, Box, Button, Paper, Typography } from "@mui/material";
 import { IUser } from "../types/ApiTypes";
-import { FC } from "react";
+import { FC, useState } from "react";
+import EditProfile from "./EditProfile";
 
 interface ProfileProps {
     user: IUser,
@@ -8,6 +9,7 @@ interface ProfileProps {
 }
 
 const Profile: FC<ProfileProps> = ({ user, isSm }) => {
+    const [openEdit, setOpenEdit] = useState(false);
     const getPhysicalActivityStatus = (numberVal: number) => {
         switch (numberVal) {
             case 1.2: return 'Not very active';
@@ -18,6 +20,7 @@ const Profile: FC<ProfileProps> = ({ user, isSm }) => {
     }
     return (
         <>
+            <EditProfile open={openEdit} setOpen={setOpenEdit} />
             <Box sx={{
                 display: 'flex',
                 flexDirection: 'row',
@@ -31,7 +34,7 @@ const Profile: FC<ProfileProps> = ({ user, isSm }) => {
                 <Button
                     variant='contained'
                     sx={{ mb: 2, color: 'white' }}
-
+                    onClick={() => setOpenEdit(true)}
                 >
                     Edit Profile
                 </Button>

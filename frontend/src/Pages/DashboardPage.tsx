@@ -1,11 +1,13 @@
 import { Copyright } from '@mui/icons-material';
-import { Box, Button, Container, Grid, Paper, Theme, Typography, useMediaQuery } from '@mui/material';
+import { Button, Container, Grid, Paper, Theme, Typography, useMediaQuery } from '@mui/material';
 import BmiChart from '../components/BmiChart';
 import CaloriesChart from '../components/CaloriesChart';
+import LastReports from '../components/LastReports';
 import Profile from '../components/Profile';
 import { useAppSelector } from '../store/hooks';
 import { IUser } from '../types/ApiTypes';
-import LastReports from '../components/LastReports';
+import { useState } from 'react';
+import ReportDailyBmi from '../components/ReportDailyBmi';
 
 const DashboardPage = () => {
     const user = useAppSelector((state) => state.auth.user) as IUser;
@@ -15,10 +17,11 @@ const DashboardPage = () => {
     const isMd = useMediaQuery((theme: Theme) =>
         theme.breakpoints.down('md')
     );
+    const [openBmiReport, setOpenBmiReport] = useState(false);
     return (
         <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
+            <ReportDailyBmi open={openBmiReport} setOpen={setOpenBmiReport}/>
             <Grid container spacing={3}>
-
                 <Grid item xs={12} sm={12} md={8} lg={9} >
                     <Paper
                         sx={{
@@ -55,7 +58,6 @@ const DashboardPage = () => {
                         </div>
                     </Paper>
                 </Grid>
-
                 <Grid item xs={12} sm={12} md={12} lg={10}>
                     <Paper
                         sx={{
@@ -86,7 +88,7 @@ const DashboardPage = () => {
                         <Button
                             variant='contained'
                             sx={{ mb: 2, color: 'white' }}
-
+                            onClick={() => setOpenBmiReport(true)}
                         >
                             Report
                             Daily
