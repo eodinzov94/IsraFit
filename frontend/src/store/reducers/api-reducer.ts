@@ -188,7 +188,7 @@ export const apiReducer = createApi({
             },
 
         }),
-        updateBmi: builder.mutation<{ status: string }, IUserBmiPayload>({
+        updateBmi: builder.mutation<{ status: string,user: IUser }, IUserBmiPayload>({
             query: (payload) => ({
                 url: `/update-bmi`,
                 method: 'POST',
@@ -198,6 +198,7 @@ export const apiReducer = createApi({
                 try {
                     const { data } = await queryFulfilled
                     if (data.status === 'OK') {
+                        dispatch(setUser(data.user))
                         // Access the generated endpoint hooks from the API definition
                         const bmiHistoryQuery = apiReducer.endpoints.getBmiHistory.useQuery(null);
                         // Run the bmiHistoryQuery manually
@@ -239,5 +240,10 @@ export const {
     useLoginMutation,
     useRegisterMutation,
     useEditProfileMutation,
-    useGetAllLogsQuery
+    useGetAllLogsQuery,
+    useReportMealMutation,
+    useGetMealHistoryQuery,
+    useUpdateGoalMutation,
+    useGetGoalQuery,
+    useUpdateBmiMutation
 } = apiReducer
