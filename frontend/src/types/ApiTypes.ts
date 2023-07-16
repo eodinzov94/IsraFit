@@ -54,3 +54,42 @@ export interface LogRow {
     url: string;
     status: string;
 }
+
+export interface MealDailyPayload {
+    date: Date
+    totalCalories: number
+}
+export interface GoalPayload {
+    endDate: Date
+    goalWeight: number
+    recommendedCalories: number
+}
+
+export interface IUserBmiPayload {
+    weight: number
+}
+export interface IMealDaily {
+    userId: number
+    totalCalories: number
+    date: Date
+}
+export interface IUserBMI {
+    userId: number
+    date: Date
+    weight: number
+    bmi: number
+}
+export interface IGoal {
+    userId: number
+    endDate: Date
+    goalWeight: number
+    recommendedCalories: number
+    startDate: Date
+    duration: number
+}
+
+export interface UserDataState{
+    goal: (null | IGoal),
+    mealHistory: IMealDaily[]
+    bmiHistory: IUserBMI[]
+}

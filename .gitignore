@@ -7,4 +7,4 @@ frontend/yarn.lock
 .idea/.gitignore
 .idea/git_toolbox_prj.xml
 .idea/prettier.xml
-backend/src/access.log
+backend/src/helpers/access.log

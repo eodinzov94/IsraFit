@@ -1,12 +1,19 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 import {
+    GoalPayload,
+    IGoal,
+    IMealDaily,
     IUser,
+    IUserBMI,
+    IUserBmiPayload,
     IUserLoginPayload,
     IUserRegisterPayload,
     IUserUpdatePayload,
-    LogRow
+    LogRow,
+    MealDailyPayload
 } from '../../types/ApiTypes'
 import { setUser } from './auth-reducer'
+import { setBmiHistory, setGoal, setMealHistory } from './user-data-reducer'
 
 export const apiReducer = createApi({
     reducerPath: 'apiReducer',
@@ -19,7 +26,6 @@ export const apiReducer = createApi({
             }
             return headers
         },
-
     }),
     endpoints: (builder) => ({
         authMe: builder.query<{ status: 'OK', user: IUser }, null>({
@@ -30,7 +36,7 @@ export const apiReducer = createApi({
                 try {
                     const { data } = await queryFulfilled
                     console.log(data);
-                    
+
                     dispatch(setUser(data.user))
                 } catch (error) {
                     console.log(error)
@@ -103,6 +109,127 @@ export const apiReducer = createApi({
                 url: '/get-all-logs',
                 method: 'GET'
             }),
+        }),
+        reportMeal: builder.mutation<{ status: string }, MealDailyPayload>({
+            query: (payload) => ({
+                url: `/report-meal`,
+                method: 'POST',
+                body: payload,
+            }),
+            async onQueryStarted(args, { dispatch, queryFulfilled }) {
+                try {
+                    const { data } = await queryFulfilled
+                    if (data.status === 'OK') {
+                        // Access the generated endpoint hooks from the API definition
+                        const mealHistoryQuery = apiReducer.endpoints.getMealHistory.useQuery(null);
+                        // Run the mealHistoryQuery manually
+                        const mealHistoryResult = await mealHistoryQuery.refetch();
+                        if (mealHistoryResult.data) {
+                            dispatch(setMealHistory(mealHistoryResult.data.mealHistory))
+                        }
+                        else {
+                            console.log('No data');
+                        }
+                    }
+                } catch (error) {
+                    console.log(error)
+                }
+            },
+        }),
+
+        getMealHistory: builder.query<{ status: 'OK', mealHistory: IMealDaily[] }, null>({
+            query: () => ({
+                url: `/get-meal-history`,
+            }),
+            async onQueryStarted(args, { dispatch, queryFulfilled }) {
+                try {
+                    const { data } = await queryFulfilled
+                    if (data.status === 'OK') {
+                        dispatch(setMealHistory(data.mealHistory))
+                    }
+                } catch (error) {
+                    console.log(error)
+                }
+            },
+
+        }),
+
+        updateGoal: builder.mutation<{ status: string, goal: IGoal }, GoalPayload>({
+            query: (payload) => ({
+                url: `/update-goal`,
+                method: 'POST',
+                body: payload,
+            }),
+            async onQueryStarted(args, { dispatch, queryFulfilled }) {
+                try {
+                    const { data } = await queryFulfilled
+                    if (data.status === 'OK') {
+                        dispatch(setGoal(data.goal))
+                    }
+                } catch (error) {
+                    console.log(error)
+                }
+            },
+        }),
+
+        getGoal: builder.query<{ status: 'OK', goal: IGoal }, null>({
+            query: () => ({
+                url: `/get-goal`,
+            }),
+            async onQueryStarted(args, { dispatch, queryFulfilled }) {
+                try {
+                    const { data } = await queryFulfilled
+                    if (data.status === 'OK') {
+                        dispatch(setGoal(data.goal))
+                    }
+                } catch (error) {
+                    console.log(error)
+                }
+            },
+
+        }),
+        updateBmi: builder.mutation<{ status: string }, IUserBmiPayload>({
+            query: (payload) => ({
+                url: `/update-bmi`,
+                method: 'POST',
+                body: payload,
+            }),
+            async onQueryStarted(args, { dispatch, queryFulfilled }) {
+                try {
+                    const { data } = await queryFulfilled
+                    if (data.status === 'OK') {
+                        // Access the generated endpoint hooks from the API definition
+                        const bmiHistoryQuery = apiReducer.endpoints.getBmiHistory.useQuery(null);
+                        // Run the bmiHistoryQuery manually
+                        const bmiHistoryResult = await bmiHistoryQuery.refetch();
+                        if (bmiHistoryResult.data) {
+                            dispatch(setBmiHistory(bmiHistoryResult.data.bmiHistory))
+                        }
+                        else {
+                            console.log('No data');
+                        }
+                    }
+                } catch (error) {
+                    console.log(error)
+                }
+            },
+        }),
+
+        getBmiHistory: builder.query<{ status: 'OK', bmiHistory: IUserBMI[] }, null>({
+            query: () => ({
+                url: `/get-goal`,
+            }),
+            async onQueryStarted(args, { dispatch, queryFulfilled }) {
+                try {
+                    const { data } = await queryFulfilled
+                    if (data.status === 'OK') {
+                        dispatch(setBmiHistory(data.bmiHistory))
+                    }
+                } catch (error) {
+                    console.log(error)
+                }
+            },
+
         }),
     }),
 })

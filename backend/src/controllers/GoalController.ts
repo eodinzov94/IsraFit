@@ -18,7 +18,7 @@ class GoalController {
         const { goalWeight, recommendedCalories, endDate, } = req.body
         const startDate = new Date()
         try {
-            await Goal.upsert({
+            const goal = await Goal.upsert({
                 userId: req.user!.id,
                 endDate,
                 goalWeight: goalWeight,
@@ -26,7 +26,7 @@ class GoalController {
                 startDate,
                 duration: getDifferenceInDays(startDate, endDate),
             })
-            return res.json({ status: 'OK' })
+            return res.json({ status: 'OK' , goal })
         } catch (e: any) {
             return next(ApiError.badRequest('Input error, maybe user with passed ID does not exists'))
         }

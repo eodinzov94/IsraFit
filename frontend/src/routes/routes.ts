@@ -9,11 +9,13 @@ import CaloriesChart from "../components/CaloriesChart";
 import ReportFoodPage from "../Pages/ReportFoodPage";
 import { Navigate } from "react-router-dom";
 import NotFoundPage from "../Pages/NotFoundPage";
+import RedirectHome from "../components/RedirectHome";
 
 
 export interface IRoute {
     path: string;
     element: React.ComponentType;
+    redirect?:string;
 }
 
 export enum RouteNames {
@@ -29,8 +31,6 @@ export enum RouteNames {
     DASHBOARD = '/dashboard',
     ETC = '*',
 }
-
-
 export const publicRoutes: IRoute[] = [
     { path: RouteNames.LOGIN, element: LoginPage },
     { path: RouteNames.REGISTER, element: RegisterPage },
@@ -46,11 +46,18 @@ export const userRoutes: IRoute[] = [
     { path: RouteNames.FOOD_TABLE, element: FoodTablePage },
     { path: RouteNames.HOME, element: FoodTablePage },
     { path: RouteNames.DASHBOARD, element: DashboardPage },
+    //Redirect
+    { path: RouteNames.LOGIN, element: RedirectHome },
+    { path: RouteNames.REGISTER, element:RedirectHome },
+    //404
     { path: RouteNames.ETC, element: NotFoundPage },
-
 ]
 
 export const adminRoutes: IRoute[] = [
     { path: RouteNames.HOME, element: AdminLogsPage },
+    //Redirect
+    { path: RouteNames.LOGIN, element: RedirectHome },
+    { path: RouteNames.REGISTER, element:RedirectHome },
+    //404
     { path: RouteNames.ETC, element: NotFoundPage },
 ]

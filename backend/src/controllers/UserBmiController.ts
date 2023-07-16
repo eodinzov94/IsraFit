@@ -30,7 +30,7 @@ class UserBmiController {
             user.weight = weight
             user.bmi = bmi
             await user.save()
-            return res.json({ status: 'OK' })
+            return res.json({ status: 'OK', user })
         } catch (e: any) {
             return next(ApiError.badRequest('Input error, maybe user with passed ID does not exists'))
         }
