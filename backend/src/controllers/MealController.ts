@@ -1,21 +1,25 @@
 import { NextFunction, Response } from "express"
 import ApiError from "../error/ApiError.js"
-import Meal from "../models/Meal.js"
-import { InputMeal } from "../types/MealTypes.js"
+import MealDaily from "../models/MealDaily.js"
+import { InputMealDaily } from "../types/MealTypes.js"
 import { RequestWithUser, TypedRequestBody } from "../types/RequestType.js"
 
 class MealController {
-    async reportMeal(req: TypedRequestBody<InputMeal>, res: Response, next: NextFunction) {
-        const {meal, date,} = req.body
+    async reportMeal(req: TypedRequestBody<InputMealDaily>, res: Response, next: NextFunction) {
+        const {totalCalories, date,} = req.body
         try {
-            for(const ingredient of meal) {
-                await Meal.create({
-                    code:ingredient.code,
-                    quantity:ingredient.quantity,
+            const meal = await MealDaily.findOne({ where: { userId: req.user?.id, date: date } })
+            if(!meal) {
+                await MealDaily.create({
+                    totalCalories,
                     date,
                     userId: req.user!.id
                 })
+            }else{
+                meal.totalCalories += totalCalories
+                await meal.save()
             }
+            
         return res.json({ status: 'OK' })
         } catch (e: any) {
             return next(ApiError.badRequest('Input error, maybe user with passed ID does not exists'))
@@ -23,7 +27,7 @@ class MealController {
     }
     async getMealHistory(req: RequestWithUser, res: Response, next: NextFunction) {
         try {
-            const mealHistory = await Meal.findAll({ where: { userId: req.user?.id } })
+            const mealHistory = await MealDaily.findAll({ where: { userId: req.user?.id } })
             return res.json({ status: 'OK', mealHistory })
         }catch (e: any) {
             return next(ApiError.badRequest('Input error, maybe user with passed ID does not exists'))

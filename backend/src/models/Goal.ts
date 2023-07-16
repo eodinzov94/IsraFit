@@ -5,17 +5,20 @@ import { IGoal } from '../types/GoalTypes.js'
 
 class Goal extends Model<IGoal, IGoal> implements IGoal {
     public userId!: number
-    public duration!: number
+    public endDate!: Date
     public goalWeight!: number
-    public avgCalory!: number
+    public recommendedCalories!: number
+    public startDate!: Date
+    public duration!: number
 }
 
 Goal.init({
     userId: { type: DataTypes.INTEGER, primaryKey: true ,references: { model: 'Users', key: 'id' } },
-    duration: { type: DataTypes.INTEGER, allowNull: false },
+    endDate: { type: DataTypes.DATEONLY, allowNull: false },
     goalWeight: { type: DataTypes.FLOAT, allowNull: false },
-    avgCalory: { type: DataTypes.FLOAT, allowNull: false }
-
+    duration: { type: DataTypes.INTEGER, allowNull: false, validate: { min: 1 } },
+    recommendedCalories: { type: DataTypes.FLOAT, allowNull: false },
+    startDate: { type: DataTypes.DATEONLY, allowNull: false },
 }, {
     timestamps: false,
     sequelize: db,

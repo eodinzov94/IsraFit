@@ -2,7 +2,14 @@
 
 export interface IGoal {
     userId: number
-    duration: number
+    endDate: Date
     goalWeight: number
-    avgCalory: number
+    recommendedCalories: number
+    startDate: Date
+    duration: number
+}
+export interface IGoalInput {
+    endDate: Date
+    goalWeight: number
+    recommendedCalories: number
 }

@@ -1,12 +1,11 @@
-export interface IMeal {
+export interface IMealDaily {
     userId: number
-    quantity: number
+    totalCalories: number
     date: Date
-    code: number
 }
 
-export interface InputMeal{
+export interface InputMealDaily{
     date: Date
-    meal: {code: number, quantity: number}[]
+    totalCalories: number
 
 }

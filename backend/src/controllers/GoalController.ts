@@ -1,19 +1,30 @@
-import { NextFunction, Request, Response } from 'express'
-import { IGoal } from '../types/GoalTypes.js'
-import Goal from '../models/Goal.js'
-import { RequestWithUser, TypedRequestBody } from '../types/RequestType.js'
+import { NextFunction, Response } from 'express'
 import ApiError from '../error/ApiError.js'
+import Goal from '../models/Goal.js'
+import { IGoalInput } from '../types/GoalTypes.js'
+import { RequestWithUser, TypedRequestBody } from '../types/RequestType.js'
+
+
+function getDifferenceInDays(startDate: Date, endDate: Date): number {
+    const diffInMs = endDate.getTime() - startDate.getTime();
+    const diffInDays = Math.floor(diffInMs / (1000 * 60 * 60 * 24));
+    return diffInDays;
+}
+
 
 
 class GoalController {
-    async setGoal(req: TypedRequestBody<IGoal>, res: Response, next: NextFunction) {
-        const { userId, duration, goalWeight, avgCalory } = req.body
+    async setGoal(req: TypedRequestBody<IGoalInput>, res: Response, next: NextFunction) {
+        const { goalWeight, recommendedCalories, endDate, } = req.body
+        const startDate = new Date()
         try {
             await Goal.upsert({
-                userId: userId,
-                duration: duration,
+                userId: req.user!.id,
+                endDate,
                 goalWeight: goalWeight,
-                avgCalory: avgCalory
+                recommendedCalories,
+                startDate,
+                duration: getDifferenceInDays(startDate, endDate),
             })
             return res.json({ status: 'OK' })
         } catch (e: any) {
