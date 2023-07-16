@@ -1,9 +1,9 @@
 export interface IUserBMI {
     userId: number
     date: Date
-    value: number
+    weight: number
+    bmi: number
 }
 export interface IUserBmiInput{
-    value: number
-    date?: Date
+    weight: number
 }

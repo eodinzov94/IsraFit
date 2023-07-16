@@ -19,7 +19,6 @@ morgan.token('user-email', function getId(req: RequestWithUserEmail) {
     return req?.userEmail || 'Guest'
 })
 
-
 app.use(cors())
 app.use(express.json())
 app.use(assignUserEmail)

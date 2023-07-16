@@ -1,6 +1,7 @@
 import { db } from '../db.js'
 import { DataTypes, Model } from 'sequelize'
 import { IUserRegister, UserAttributes } from '../types/UserTypes.js'
+import { calculateBMI } from '../controllers/UserBmiController.js'
 
 class User extends Model<UserAttributes, IUserRegister> implements UserAttributes {
   public id!: number
@@ -15,6 +16,7 @@ class User extends Model<UserAttributes, IUserRegister> implements UserAttribute
   public weight!: number
   public height!: number
   public physicalActivity!: number
+  public bmi !: number
   public TDEE!: number
   // timestamps!
   public readonly createdAt!: Date
@@ -38,6 +40,9 @@ User.init(
     role: { type: DataTypes.STRING, defaultValue: 'User' },
     weight: { type: DataTypes.FLOAT, allowNull: false },
     height: { type: DataTypes.FLOAT, allowNull: false },
+    bmi: {
+      type: DataTypes.FLOAT, allowNull: false
+    },
     physicalActivity: { type: DataTypes.FLOAT, allowNull: false },
     TDEE: { type: DataTypes.FLOAT, allowNull: false },
   },
@@ -46,5 +51,9 @@ User.init(
     sequelize: db,
   },
 )
-
+User.beforeSave((user) => {
+  if (user.changed('weight') || user.changed('height')) {
+    user.bmi = calculateBMI(user.weight, user.height)
+  }
+});
 export default User

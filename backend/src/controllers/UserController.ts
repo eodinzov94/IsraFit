@@ -5,6 +5,7 @@ import ApiError from '../error/ApiError.js'
 import User from '../models/User.js'
 import { RequestWithUser, TypedRequestBody } from '../types/RequestType.js'
 import { IUser, IUserLogin, IUserRegister, IUserUpdate, IUserUpdateKeys } from '../types/UserTypes.js'
+import { calculateBMI } from './UserBmiController.js'
 const { sign } = pkg
 
 const getUserData = (user: IUser) => {
@@ -58,10 +59,12 @@ class UserController {
         height,
         physicalActivity,
         TDEE,
+        bmi: calculateBMI(weight, height),
       })
       const token = generateJwt(user)
       return res.json({ token, status: 'OK', user: getUserData(user) })
     } catch (e: any) {
+      console.log(e);
       return next(ApiError.badRequest('Input error'))
     }
   }

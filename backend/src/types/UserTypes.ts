@@ -1,5 +1,6 @@
 export interface UserAttributes extends IUser {
   password: string
+  bmi: number
   createdAt?: Date
   updatedAt?: Date
 }
@@ -15,6 +16,7 @@ export interface IUserRegister {
   birthYear: number
   TDEE: number
   role?: string
+  bmi?: number
 }
 export interface IUserUpdate {
   firstName?: string
