@@ -1,9 +1,9 @@
-import InfoIcon from '@mui/icons-material/Info';
-import { Avatar, Box, Button, Tooltip, Typography } from "@mui/material";
+import { Avatar, Box, Button, Typography } from "@mui/material";
 import { FC, useState } from "react";
 import { IUser } from "../types/ApiTypes";
+import BmiRangeInfo from "./BmiRangeInfo";
 import EditProfile from "./EditProfile";
-import BmiRange from "../assets/bmirange.png";
+
 interface ProfileProps {
     user: IUser,
     isSm: boolean
@@ -11,6 +11,7 @@ interface ProfileProps {
 
 const Profile: FC<ProfileProps> = ({ user, isSm }) => {
     const [openEdit, setOpenEdit] = useState(false);
+    
     const getPhysicalActivityStatus = (numberVal: number) => {
         switch (numberVal) {
             case 1.2: return 'Not very active';
@@ -93,15 +94,12 @@ const Profile: FC<ProfileProps> = ({ user, isSm }) => {
                         <b>Physical Activity:</b> {getPhysicalActivityStatus(user.physicalActivity)}
                     </Typography>
                     <Typography component="p" variant="subtitle2" align='left'>
-                        <b>BMI:</b> TODO: 24
-                        <Tooltip title={<img src={BmiRange} alt="BMI ranges" width={280} />} placement='bottom'
-                            componentsProps={{ tooltip:{sx: {backgroundColor: 'lightgray'} } }}
-                            enterTouchDelay={0}>
-                            <InfoIcon/>
-                        </Tooltip>
+                        <b>BMI:</b> {user.bmi}
+                        <BmiRangeInfo/>
                     </Typography>
                     <Typography component="p" variant="subtitle2" align='left' color={'primary'} sx={{ mt: 2 }}>
                         <b >Weight Goal:</b> TODO:Add
+                        
                     </Typography>
                 </Box>
             </Box>

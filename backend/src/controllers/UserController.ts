@@ -21,6 +21,7 @@ const getUserData = (user: IUser) => {
     height: user.height,
     physicalActivity: user.physicalActivity,
     TDEE: user.TDEE,
+    bmi:user.bmi
   }
 }
 
@@ -120,6 +121,8 @@ class UserController {
       if (!user) {
         return next(ApiError.badRequest('User does not exists'))
       }
+      user.bmi = calculateBMI(user.weight, user.height)
+      await user.save()
       return res.json({
         status: 'OK',
         user: getUserData(user),

@@ -1,8 +1,5 @@
 import {
-    Alert,
-    LinearProgress,
     Paper,
-    Snackbar,
     Table,
     TableBody,
     TableCell,
@@ -13,13 +10,13 @@ import {
     TextField
 } from "@mui/material";
 import { ChangeEvent, MouseEvent, useState } from "react";
+import ExportExcel from "../components/ExportExel";
+import LoaderWithError from "../components/LoaderWithError";
 import { useGetAllLogsQuery } from "../store/reducers/api-reducer";
 import { LogRow } from "../types/ApiTypes";
-import ExportExcel from "../components/ExportExel";
-import { isErrorWithDataAndMessage } from "../helpers/helpers";
 
 const AdminLogsPage = () => {
-    const { data, isLoading, isError,error } = useGetAllLogsQuery('');
+    const { data, isLoading, isError, error } = useGetAllLogsQuery('');
     const allLogs = data?.allLogs || [] as LogRow[];
     const [page, setPage] = useState(0);
     const [searchTerm, setSearchTerm] = useState("");
@@ -55,12 +52,7 @@ const AdminLogsPage = () => {
     );
     return (
         <div>
-            <Snackbar open={isError} autoHideDuration={7000} anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }} >
-                <Alert severity="error" sx={{ width: '100%' }}>
-                    {isErrorWithDataAndMessage(error) && error.data.message || 'Something went wrong'}
-                </Alert>
-            </Snackbar>
-            {isLoading && <LinearProgress />}
+            <LoaderWithError isError={isError} error={error} isLoading={isLoading} />
             <TextField
                 label="Search by email, url, method, status"
                 variant="outlined"

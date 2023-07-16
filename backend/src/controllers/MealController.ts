@@ -19,8 +19,7 @@ class MealController {
                 meal.totalCalories += totalCalories
                 await meal.save()
             }
-            
-        return res.json({ status: 'OK' })
+        return res.json({ status: 'OK', meal })
         } catch (e: any) {
             return next(ApiError.badRequest('Input error, maybe user with passed ID does not exists'))
         }

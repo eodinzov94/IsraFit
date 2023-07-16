@@ -13,7 +13,7 @@ import {
     MealDailyPayload
 } from '../../types/ApiTypes'
 import { setUser } from './auth-reducer'
-import { setBmiHistory, setGoal, setMealHistory } from './user-data-reducer'
+import { addBmiReport, addMeal, setBmiHistory, setGoal, setMealHistory } from './user-data-reducer'
 
 export const apiReducer = createApi({
     reducerPath: 'apiReducer',
@@ -110,18 +110,17 @@ export const apiReducer = createApi({
                 method: 'GET'
             }),
         }),
-        reportMeal: builder.mutation<{ status: string }, MealDailyPayload>({
+        reportMeal: builder.mutation<{ status: string, meal: IMealDaily }, MealDailyPayload>({
             query: (payload) => ({
                 url: `/report-meal`,
                 method: 'POST',
                 body: payload,
             }),
-            async onQueryStarted(args, { queryFulfilled }) {
+            async onQueryStarted(args, { dispatch, queryFulfilled }) {
                 try {
                     const { data } = await queryFulfilled
                     if (data.status === 'OK') {
-                         //refetch meal history
-                        await apiReducer.endpoints.getMealHistory.useQuery(null).refetch();
+                        dispatch(addMeal(data.meal))
                     }
                 } catch (error) {
                     console.log(error)
@@ -180,7 +179,7 @@ export const apiReducer = createApi({
             },
 
         }),
-        updateBmi: builder.mutation<{ status: string, user: IUser }, IUserBmiPayload>({
+        updateBmi: builder.mutation<{ status: string, user: IUser, userBmiReport: IUserBMI }, IUserBmiPayload>({
             query: (payload) => ({
                 url: `/update-bmi`,
                 method: 'POST',
@@ -191,8 +190,7 @@ export const apiReducer = createApi({
                     const { data } = await queryFulfilled
                     if (data.status === 'OK') {
                         dispatch(setUser(data.user))
-                        //refetch bmi history
-                        await apiReducer.endpoints.getBmiHistory.useQuery(null).refetch();
+                        dispatch(addBmiReport(data.userBmiReport))
                     }
                 } catch (error) {
                     console.log(error)
@@ -202,7 +200,7 @@ export const apiReducer = createApi({
 
         getBmiHistory: builder.query<{ status: 'OK', bmiHistory: IUserBMI[] }, null>({
             query: () => ({
-                url: `/get-goal`,
+                url: `/get-bmi-history`,
             }),
             async onQueryStarted(args, { dispatch, queryFulfilled }) {
                 try {
@@ -229,5 +227,7 @@ export const {
     useGetMealHistoryQuery,
     useUpdateGoalMutation,
     useGetGoalQuery,
-    useUpdateBmiMutation
+    useUpdateBmiMutation,
+    useGetBmiHistoryQuery
 } = apiReducer
+

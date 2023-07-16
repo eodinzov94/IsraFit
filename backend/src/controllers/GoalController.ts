@@ -24,10 +24,11 @@ class GoalController {
                 goalWeight: goalWeight,
                 recommendedCalories,
                 startDate,
-                duration: getDifferenceInDays(startDate, endDate),
+                duration: getDifferenceInDays(startDate, new Date(endDate)),
             })
             return res.json({ status: 'OK' , goal })
         } catch (e: any) {
+            console.log(e);
             return next(ApiError.badRequest('Input error, maybe user with passed ID does not exists'))
         }
     }

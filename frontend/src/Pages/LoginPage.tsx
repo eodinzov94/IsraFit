@@ -1,5 +1,4 @@
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
-import { Alert, LinearProgress, Snackbar } from '@mui/material';
 import Avatar from '@mui/material/Avatar';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
@@ -10,8 +9,8 @@ import Typography from '@mui/material/Typography';
 import { useFormik } from 'formik';
 import { z } from 'zod';
 import { toFormikValidationSchema } from 'zod-formik-adapter';
+import LoaderWithError from '../components/LoaderWithError';
 import { useLoginMutation } from '../store/reducers/api-reducer';
-import { isErrorWithDataAndMessage } from '../helpers/helpers';
 
 export default function LoginPage() {
     const [loginUser, { error, isLoading, isError }] = useLoginMutation()
@@ -37,12 +36,7 @@ export default function LoginPage() {
 
     return (
         <Container component="main" maxWidth="xs">
-            <Snackbar open={isError} autoHideDuration={7000} anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }} >
-                <Alert  severity="error" sx={{ width: '100%' }}>
-                    {isErrorWithDataAndMessage(error) && error.data.message || 'Something went wrong'}
-                </Alert>
-            </Snackbar>
-            {isLoading && <LinearProgress />}
+            <LoaderWithError isError={isError} error={error} isLoading={isLoading} />
             <CssBaseline />
             <Box
                 sx={{

@@ -1,9 +1,5 @@
 import FlagIcon from '@mui/icons-material/Flag'
 import SubjectIcon from '@mui/icons-material/Subject'
-import Avatar from '@mui/material/Avatar'
-import { z } from 'zod'
-import { useFormik } from 'formik'
-import { toFormikValidationSchema } from 'zod-formik-adapter'
 import {
   Box,
   Button,
@@ -17,40 +13,36 @@ import {
   TextField,
   Typography,
 } from '@mui/material'
-import { useNavigate } from 'react-router-dom'
+import Avatar from '@mui/material/Avatar'
 import { DatePicker, LocalizationProvider } from '@mui/x-date-pickers'
-import dayjs, { Dayjs } from 'dayjs'
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
+import dayjs from 'dayjs'
+import { useFormik } from 'formik'
 import { ChangeEvent, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
+import { z } from 'zod'
+import { toFormikValidationSchema } from 'zod-formik-adapter'
+import LoaderWithError from '../components/LoaderWithError'
+import { useAppSelector } from '../store/hooks'
+import { useUpdateGoalMutation } from '../store/reducers/api-reducer'
 import { IUser } from '../types/ApiTypes'
 
 export default function GoalSetPage() {
   const [alertMessage, setMessage] = useState<string>('')
   const [calories, setCalories] = useState<number>(0)
   const navigate = useNavigate()
-
-  //FIXME:Temporary
-  const [user, setUser] = useState<IUser>({
-    gender: 'Female',
-    weight: 70,
-    height: 165,
-    TDEE: 1800,
-    physicalActivity: 1.3,
-    birthYear: 1990
-  } as IUser)
-  // const {data,isLoading,isError } = useAuthMeQuery(null);
-
+  const [setGoal, { isError, isLoading, error }] = useUpdateGoalMutation()
+  const user = useAppSelector(state => state.auth.user) as IUser
   const GoalSchema = z.object({
     weightGoal: z.number({ required_error: 'Please choose a goal!' })
       .gte(35, 'Weighing below 35kg is not recommended')
       .lte(250, 'Over 250kg as a goal is too high, try something lower!'),
-    dateGoal: z.instanceof(dayjs as unknown as typeof Dayjs),
   })
-
   const formik = useFormik({
     initialValues: {
-      weightGoal: user.weight - 1, dateGoal: dayjs().add(30, 'days')
-    }, validationSchema: toFormikValidationSchema(GoalSchema), onSubmit: values => {
+      weightGoal: user.weight - 1, dateGoal: dayjs().add(30, 'days'),
+    }, validationSchema: toFormikValidationSchema(GoalSchema),
+    onSubmit: values => {
 
       // Algebra, from formulas
       const totalCalorieDeficit = Math.abs((user.weight - values.weightGoal) * 7700)
@@ -59,6 +51,7 @@ export default function GoalSetPage() {
 
       // validate bad life choices by the user.
       checkDeficit(TDEEDeficit)
+
     },
   })
 
@@ -85,16 +78,29 @@ export default function GoalSetPage() {
     const upperLimit = user.gender === 'Male' ? 2000 : 1600
     if (formik.values.weightGoal === user.weight) {
       setMessage('You are already at your goal!')
-    } else if (TDEEDeficit < lowerLimit) {
+    } else if (TDEEDeficit < lowerLimit && user.weight > formik.values.weightGoal) {
       setMessage('WARNING! This weight loss plan is too aggressive!')
-    } else if (TDEEDeficit > upperLimit) {
+    } else if (TDEEDeficit > upperLimit && user.weight < formik.values.weightGoal) {
       setMessage(`WARNING! You're risking over-eating!`)
-
     } else {
       setCalories(TDEEDeficit)
     }
   }
 
+  const handleSetGoal = () => {
+    setGoal(
+      {
+        endDate: formik.values.dateGoal.toDate(),
+        goalWeight: formik.values.weightGoal,
+        recommendedCalories: calories
+      }
+    ).then((response: any) => {
+      if(response.data.status === 'OK'){
+        navigate('/dashboard')
+      }
+    })
+    
+  }
   return (<Container component='main' maxWidth='sm'>
     <CssBaseline />
     <Box
@@ -181,6 +187,7 @@ export default function GoalSetPage() {
             navigate('/food-table') //TODO
           }}
         >
+          <LoaderWithError isError={isError} error={error} isLoading={isLoading} />
           <Grid item xs={12} container justifyContent='center'>
             <Avatar sx={{ m: 1, bgcolor: 'primary.main' }}>
               <SubjectIcon />
@@ -211,7 +218,7 @@ export default function GoalSetPage() {
 
           <Grid item xs={12}>
             <Button
-              type='submit'
+              onClick={handleSetGoal}
               variant='contained'
               fullWidth
               sx={{ mb: 2, mt: 2, color: 'white' }}

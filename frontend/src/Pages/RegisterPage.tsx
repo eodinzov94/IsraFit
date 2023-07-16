@@ -1,5 +1,5 @@
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
-import { Alert, FormControlLabel, FormLabel, Grid, LinearProgress, MenuItem, Radio, RadioGroup, Snackbar } from '@mui/material';
+import { FormControlLabel, FormLabel, Grid, MenuItem, Radio, RadioGroup } from '@mui/material';
 import Avatar from '@mui/material/Avatar';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
@@ -7,12 +7,12 @@ import Container from '@mui/material/Container';
 import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
+import dayjs from "dayjs";
 import { useFormik } from 'formik';
 import { z } from 'zod';
 import { toFormikValidationSchema } from 'zod-formik-adapter';
 import { useRegisterMutation } from '../store/reducers/api-reducer';
-import { isErrorWithDataAndMessage } from '../helpers/helpers';
-import dayjs from "dayjs";
+import LoaderWithError from '../components/LoaderWithError';
 
 export default function RegisterPage() {
     const [registerUser, { error, isLoading, isError }] = useRegisterMutation()
@@ -40,8 +40,8 @@ export default function RegisterPage() {
             .lte(250, "You cannot be over 250cm"),
         physicalActivity: z.number({ required_error: "Please choose a physical activity level" }),
         birthYear: z.number({ required_error: "Please enter your age" })
-            .lte(new Date().getFullYear()-18, "You must be at least 18 years old")
-            .gte(new Date().getFullYear()-100, "You, sadly, must be at most 100 years old")
+            .lte(new Date().getFullYear() - 18, "You must be at least 18 years old")
+            .gte(new Date().getFullYear() - 100, "You, sadly, must be at most 100 years old")
     }).refine((data) => data.password === data.confirmPassword, {
         message: "Passwords don't match",
         path: ["confirmPassword"],
@@ -62,7 +62,7 @@ export default function RegisterPage() {
         },
         validationSchema: toFormikValidationSchema(RegisterSchema),
         onSubmit: values => {
-            const BMR = (10 * values.weight + 6.25 * values.height - 5 * (dayjs().year() -values.birthYear)) + (values.gender === 'Male' ? 5 : -161); //formula
+            const BMR = (10 * values.weight + 6.25 * values.height - 5 * (dayjs().year() - values.birthYear)) + (values.gender === 'Male' ? 5 : -161); //formula
             values.TDEE = BMR * values.physicalActivity; //total daily energy expenditure formula
             registerUser({
                 email: values.email,
@@ -82,12 +82,7 @@ export default function RegisterPage() {
 
     return (
         <Container component="main" maxWidth="xs">
-            <Snackbar open={isError} autoHideDuration={7000} anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }} >
-                <Alert severity="error" sx={{ width: '100%' }}>
-                    {isErrorWithDataAndMessage(error) && error.data.message || 'Something went wrong'}
-                </Alert>
-            </Snackbar>
-            {isLoading && <LinearProgress />}
+            <LoaderWithError isError={isError} error={error} isLoading={isLoading} />
             <CssBaseline />
             <Box
                 sx={{

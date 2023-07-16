@@ -1,3 +1,5 @@
+import { Dayjs } from "dayjs"
+
 export interface IUser {
     id: string,
     role: string,
@@ -11,6 +13,7 @@ export interface IUser {
     TDEE: number
     physicalActivity: number
     birthYear: number
+    bmi: number
 }
 
 export interface AuthState {
@@ -92,4 +95,5 @@ export interface UserDataState{
     goal: (null | IGoal),
     mealHistory: IMealDaily[]
     bmiHistory: IUserBMI[]
+    goalBmi: (null | number)
 }

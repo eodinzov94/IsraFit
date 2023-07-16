@@ -35,7 +35,7 @@ export const publicRoutes: IRoute[] = [
     { path: RouteNames.LOGIN, element: LoginPage },
     { path: RouteNames.REGISTER, element: RegisterPage },
     { path: RouteNames.HOME, element: FoodTablePage },
-    { path: RouteNames.ETC, element: NotFoundPage },
+    { path: RouteNames.ETC, element: RedirectHome },
 ]
 
 export const userRoutes: IRoute[] = [

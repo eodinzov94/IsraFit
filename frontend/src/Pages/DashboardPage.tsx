@@ -8,8 +8,13 @@ import ReportDailyBmi from '../components/ReportDailyBmi';
 import { RouteNames } from '../routes/routes';
 import { useAppSelector } from '../store/hooks';
 import { IUser } from '../types/ApiTypes';
+import { useGetBmiHistoryQuery, useGetGoalQuery, useGetMealHistoryQuery } from '../store/reducers/api-reducer';
+import DashboardGoal from '../components/DashboardGoal';
 
 const DashboardPage = () => {
+    useGetGoalQuery(null)
+    useGetMealHistoryQuery(null)
+    useGetBmiHistoryQuery(null)
     const navigate = useNavigate();
     const user = useAppSelector((state) => state.auth.user) as IUser;
     const isSm = useMediaQuery((theme: Theme) =>
@@ -43,17 +48,7 @@ const DashboardPage = () => {
                             height: '240px',
                         }}
                     >
-                        <div>
-                            <Typography component="h2" variant="h6" color="primary" gutterBottom align='center'>
-                                Current Goal
-                            </Typography>
-                            <Typography component="p" variant="h4" align='center'>
-                                1530
-                            </Typography>
-                            <Typography color="text.secondary" sx={{ flex: 1 }} align='center'>
-                                Calories Per day
-                            </Typography>
-                        </div>
+                        <DashboardGoal />
                     </Paper>
                 </Grid>
                 <Grid item xs={12} sm={12} md={12} lg={12}>
@@ -104,15 +99,17 @@ const DashboardPage = () => {
                             justifyContent: { xs: 'space-between', sm: 'space-between', md: 'space-between', lg: 'center' },
                         }}
                     >
-                        <Grid item  sx={{ alignItems: 'center', justifyContent: 'center', 
-                        height: { xs: 200, sm: 230, md: 350, lg: 230 },
-                        width: { xs: 270, sm: 600, md: 800, lg: 500 },
+                        <Grid item sx={{
+                            alignItems: 'center', justifyContent: 'center',
+                            height: { xs: 200, sm: 230, md: 350, lg: 230 },
+                            width: { xs: 270, sm: 600, md: 800, lg: 500 },
                         }}>
-                            <BmiChart />
+                            <BmiChart skip={true} />
                         </Grid>
-                        <Grid item  sx={{ alignItems: 'center', justifyContent: 'center', 
-                        height: { xs: 200, sm: 230, md: 350, lg: 230 },
-                        width: { xs: 270, sm: 600, md: 800, lg: 500 },
+                        <Grid item sx={{
+                            alignItems: 'center', justifyContent: 'center',
+                            height: { xs: 200, sm: 230, md: 350, lg: 230 },
+                            width: { xs: 270, sm: 600, md: 800, lg: 500 },
                         }}>
                             <CaloriesChart />
                         </Grid>

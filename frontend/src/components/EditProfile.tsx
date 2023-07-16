@@ -6,6 +6,8 @@ import { z } from "zod";
 import { toFormikValidationSchema } from "zod-formik-adapter";
 import { useAppSelector } from "../store/hooks";
 import { IUser } from "../types/ApiTypes";
+import { useEditProfileMutation } from "../store/reducers/api-reducer";
+import LoaderWithError from "./LoaderWithError";
 
 interface EditProfileProps {
     open: boolean;
@@ -13,6 +15,7 @@ interface EditProfileProps {
 
 }
 const EditProfile: FC<EditProfileProps> = ({ open, setOpen }) => {
+    const [editProfile, {  isError, isLoading, error}] = useEditProfileMutation();
     const closeAndRestForm = () => {
         setOpen(false);
         formik.resetForm();
@@ -47,11 +50,16 @@ const EditProfile: FC<EditProfileProps> = ({ open, setOpen }) => {
             TDEE: user.TDEE
         },
         validationSchema: toFormikValidationSchema(userUpdateSchema),
+        enableReinitialize: true,
         onSubmit: values => {
             const BMR = (10 * user.weight + 6.25 * values.height - 5 * (dayjs().year() - values.birthYear)) + (values.gender === 'Male' ? 5 : -161); //formula
             values.TDEE = BMR * values.physicalActivity; //total daily energy expenditure formula
-            //backend update
-            console.log(values)
+            editProfile(values).then((response: any) => {
+                if(response.data.status==='OK'){
+                    closeAndRestForm();
+                }
+                
+            })
         },
     });
 
@@ -63,6 +71,7 @@ const EditProfile: FC<EditProfileProps> = ({ open, setOpen }) => {
             onClose={closeAndRestForm}
         >
             <DialogTitle>Edit Profile</DialogTitle>
+            <LoaderWithError isError={isError} error={error} isLoading={isLoading}/>
             <Box
                 sx={{
                     display: 'flex',
@@ -71,7 +80,6 @@ const EditProfile: FC<EditProfileProps> = ({ open, setOpen }) => {
                     maxWidth: 400,
                     p: 2
                 }}>
-
                 <Box component="form" onSubmit={formik.handleSubmit} noValidate sx={{ alignItems: 'center', }}>
                     <Grid container spacing={2}>
                         <Grid item xs={12} sm={6}>
@@ -195,7 +203,7 @@ const EditProfile: FC<EditProfileProps> = ({ open, setOpen }) => {
                     Cancel
                 </Button>
                 <Button
-                    type="submit"
+                    onClick={()=>formik.handleSubmit()}
                     fullWidth
                     variant="contained"
                     sx={{ color: 'white' }}>

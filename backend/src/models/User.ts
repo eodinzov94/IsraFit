@@ -51,9 +51,5 @@ User.init(
     sequelize: db,
   },
 )
-User.beforeSave((user) => {
-  if (user.changed('weight') || user.changed('height')) {
-    user.bmi = calculateBMI(user.weight, user.height)
-  }
-});
+
 export default User

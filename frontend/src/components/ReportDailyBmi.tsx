@@ -1,17 +1,19 @@
 import { Box, Button, Dialog, DialogActions, DialogContent, DialogTitle, TextField } from '@mui/material';
-import dayjs from 'dayjs';
 import { useFormik } from 'formik';
 import { FC } from 'react';
 import { z } from 'zod';
 import { toFormikValidationSchema } from 'zod-formik-adapter';
 import { useAppSelector } from '../store/hooks';
+import { useUpdateBmiMutation } from '../store/reducers/api-reducer';
 import { IUser } from '../types/ApiTypes';
+import LoaderWithError from './LoaderWithError';
 interface ReportDailyBmiProps {
     open: boolean;
     setOpen: (open: boolean) => void;
 
 }
 const ReportDailyBmi: FC<ReportDailyBmiProps> = ({ open, setOpen }) => {
+    const [reportBmi, {  isError, isLoading, error}] = useUpdateBmiMutation();
     const closeAndRestForm = () => {
         setOpen(false);
         formik.resetForm();
@@ -24,15 +26,15 @@ const ReportDailyBmi: FC<ReportDailyBmiProps> = ({ open, setOpen }) => {
     })
     const formik = useFormik({
         initialValues: {
-            weight: user.weight,
-            TDEE: user.TDEE
+            weight: user.weight
         },
         validationSchema: toFormikValidationSchema(userUpdateSchema),
         onSubmit: values => {
-            const BMR = (10 * user.weight + 6.25 * user.height - 5 * (dayjs().year() - user.birthYear)) + (user.gender === 'Male' ? 5 : -161); //formula
-            values.TDEE = BMR * user.physicalActivity; //total daily energy expenditure formula
-            //backend update
-            console.log(values)
+            reportBmi(values).then((response: any) => {
+                if(response.data.status === 'OK'){
+                    closeAndRestForm();
+                }
+            })
         },
     });
 
@@ -43,6 +45,7 @@ const ReportDailyBmi: FC<ReportDailyBmiProps> = ({ open, setOpen }) => {
             onClose={closeAndRestForm}
         >
             <DialogTitle>Report Daily BMI</DialogTitle>
+            <LoaderWithError isError={isError} error={error} isLoading={isLoading}/>
             <DialogContent>
                 <Box component="form" onSubmit={formik.handleSubmit} noValidate sx={{ alignItems: 'center', }}>
                     <TextField
@@ -78,6 +81,7 @@ const ReportDailyBmi: FC<ReportDailyBmiProps> = ({ open, setOpen }) => {
                     variant="contained"
                     sx={{ color: 'white' }}
                     type="submit"
+                    onClick={() => formik.handleSubmit()}
                 >
                     Confirm
                 </Button>

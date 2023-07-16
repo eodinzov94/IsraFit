@@ -21,7 +21,7 @@ class UserBmiController {
                 return next(ApiError.badRequest('User does not exists'))
             }
             const bmi = calculateBMI(weight, user.height)
-            await UserBMI.upsert({
+            const userBmiReport = await UserBMI.upsert({
                 userId: user.id,
                 weight,
                 bmi,
@@ -29,8 +29,10 @@ class UserBmiController {
             })
             user.weight = weight
             user.bmi = bmi
-            await user.save()
-            return res.json({ status: 'OK', user })
+            const BMR = (10 * user.weight + 6.25 * user.height - 5 * (new Date().getFullYear() - user.birthYear)) + (user.gender === 'Male' ? 5 : -161); //formula
+            user.TDEE = BMR * user.physicalActivity; //total daily energy expenditure formula
+            await user.save()          
+            return res.json({ status: 'OK', user , userBmiReport })
         } catch (e: any) {
             return next(ApiError.badRequest('Input error, maybe user with passed ID does not exists'))
         }
