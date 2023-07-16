@@ -116,20 +116,12 @@ export const apiReducer = createApi({
                 method: 'POST',
                 body: payload,
             }),
-            async onQueryStarted(args, { dispatch, queryFulfilled }) {
+            async onQueryStarted(args, { queryFulfilled }) {
                 try {
                     const { data } = await queryFulfilled
                     if (data.status === 'OK') {
-                        // Access the generated endpoint hooks from the API definition
-                        const mealHistoryQuery = apiReducer.endpoints.getMealHistory.useQuery(null);
-                        // Run the mealHistoryQuery manually
-                        const mealHistoryResult = await mealHistoryQuery.refetch();
-                        if (mealHistoryResult.data) {
-                            dispatch(setMealHistory(mealHistoryResult.data.mealHistory))
-                        }
-                        else {
-                            console.log('No data');
-                        }
+                         //refetch meal history
+                        await apiReducer.endpoints.getMealHistory.useQuery(null).refetch();
                     }
                 } catch (error) {
                     console.log(error)
@@ -188,7 +180,7 @@ export const apiReducer = createApi({
             },
 
         }),
-        updateBmi: builder.mutation<{ status: string,user: IUser }, IUserBmiPayload>({
+        updateBmi: builder.mutation<{ status: string, user: IUser }, IUserBmiPayload>({
             query: (payload) => ({
                 url: `/update-bmi`,
                 method: 'POST',
@@ -199,16 +191,8 @@ export const apiReducer = createApi({
                     const { data } = await queryFulfilled
                     if (data.status === 'OK') {
                         dispatch(setUser(data.user))
-                        // Access the generated endpoint hooks from the API definition
-                        const bmiHistoryQuery = apiReducer.endpoints.getBmiHistory.useQuery(null);
-                        // Run the bmiHistoryQuery manually
-                        const bmiHistoryResult = await bmiHistoryQuery.refetch();
-                        if (bmiHistoryResult.data) {
-                            dispatch(setBmiHistory(bmiHistoryResult.data.bmiHistory))
-                        }
-                        else {
-                            console.log('No data');
-                        }
+                        //refetch bmi history
+                        await apiReducer.endpoints.getBmiHistory.useQuery(null).refetch();
                     }
                 } catch (error) {
                     console.log(error)
