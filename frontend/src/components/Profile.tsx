@@ -3,6 +3,7 @@ import { FC, useState } from "react";
 import { IUser } from "../types/ApiTypes";
 import BmiRangeInfo from "./BmiRangeInfo";
 import EditProfile from "./EditProfile";
+import { useAppSelector } from "../store/hooks";
 
 interface ProfileProps {
     user: IUser,
@@ -10,7 +11,9 @@ interface ProfileProps {
 }
 
 const Profile: FC<ProfileProps> = ({ user, isSm }) => {
+    const goal = useAppSelector(state => state.userData.goal)
     const [openEdit, setOpenEdit] = useState(false);
+
     
     const getPhysicalActivityStatus = (numberVal: number) => {
         switch (numberVal) {
@@ -97,10 +100,10 @@ const Profile: FC<ProfileProps> = ({ user, isSm }) => {
                         <b>BMI:</b> {user.bmi}
                         <BmiRangeInfo/>
                     </Typography>
-                    <Typography component="p" variant="subtitle2" align='left' color={'primary'} sx={{ mt: 2 }}>
-                        <b >Weight Goal:</b> TODO:Add
+                    {goal && <Typography component="p" variant="subtitle2" align='left' color={'primary'} sx={{ mt: 2 }}>
+                        <b >Weight Goal:</b> {goal.goalWeight}
                         
-                    </Typography>
+                    </Typography>}
                 </Box>
             </Box>
         </>
