@@ -39,7 +39,7 @@ export const options = {
     },
 };
 const CaloriesChart: FC<CaloriesChartProps> = ({ skip }) => {
-    const { isLoading } = useGetMealHistoryQuery(null, { skip: !!skip });
+    const { isLoading } = useGetMealHistoryQuery('', { skip: !!skip });
     const mealHistory = useAppSelector((state) => state.userData.mealHistory);
     const caloriesTarget = useAppSelector((state) => state.userData.goal?.recommendedCalories);
     const data = {
