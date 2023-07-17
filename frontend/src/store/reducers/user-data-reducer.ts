@@ -15,6 +15,10 @@ const userDataSlice = createSlice({
             // }
             return state
         },
+        setNoGoal(state) {
+            state.goal = null
+            return state
+        },
         setMealHistory(state, action: PayloadAction<IMealDaily[]>) {
             state.mealHistory = action.payload
             return state
@@ -46,4 +50,4 @@ const userDataSlice = createSlice({
 
 
 export const userDataReducer = userDataSlice.reducer
-export const { setBmiHistory, setGoal, setMealHistory, addBmiReport, addMeal } = userDataSlice.actions
+export const { setBmiHistory, setGoal, setMealHistory, addBmiReport, addMeal, setNoGoal } = userDataSlice.actions

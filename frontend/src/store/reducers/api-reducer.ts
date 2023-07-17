@@ -13,7 +13,7 @@ import {
     MealDailyPayload
 } from '../../types/ApiTypes'
 import { setUser } from './auth-reducer'
-import { addBmiReport, addMeal, setBmiHistory, setGoal, setMealHistory } from './user-data-reducer'
+import { addBmiReport, addMeal, setBmiHistory, setGoal, setMealHistory, setNoGoal } from './user-data-reducer'
 
 export const apiReducer = createApi({
     reducerPath: 'apiReducer',
@@ -127,7 +127,7 @@ export const apiReducer = createApi({
             },
         }),
 
-        getMealHistory: builder.query<{ status: 'OK', mealHistory: IMealDaily[] }, null>({
+        getMealHistory: builder.query<{ status: 'OK', mealHistory: IMealDaily[] }, string>({
             query: () => ({
                 url: `/get-meal-history`,
             }),
@@ -162,7 +162,7 @@ export const apiReducer = createApi({
             },
         }),
 
-        getGoal: builder.query<{ status: 'OK', goal: IGoal }, null>({
+        getGoal: builder.query<{ status: 'OK', goal: IGoal }, string>({
             query: () => ({
                 url: `/get-goal`,
             }),
@@ -173,6 +173,7 @@ export const apiReducer = createApi({
                         dispatch(setGoal(data.goal))
                     }
                 } catch (error) {
+                    dispatch(setNoGoal())
                     console.log(error)
                 }
             },
@@ -197,7 +198,7 @@ export const apiReducer = createApi({
             },
         }),
 
-        getBmiHistory: builder.query<{ status: 'OK', bmiHistory: IUserBMI[] }, null>({
+        getBmiHistory: builder.query<{ status: 'OK', bmiHistory: IUserBMI[] }, string>({
             query: () => ({
                 url: `/get-bmi-history`,
             }),

@@ -286,3 +286,11 @@ eodinzov94@gmail.com 2023-07-17T19:06:47.965Z POST /api/login 200
 eodinzov94@gmail.com 2023-07-17T19:06:56.437Z GET /api/get-meal-history 304
 eodinzov94@gmail.com 2023-07-17T19:06:56.544Z GET /api/get-goal 304
 eodinzov94@gmail.com 2023-07-17T19:06:56.637Z GET /api/get-bmi-history 304
+eodinzov94@gmail.com 2023-07-17T19:08:47.166Z POST /api/login 200
+eodinzov94@gmail.com 2023-07-17T19:08:47.309Z GET /api/get-meal-history 304
+eodinzov94@gmail.com 2023-07-17T19:08:47.442Z GET /api/get-goal 304
+eodinzov94@gmail.com 2023-07-17T19:08:47.541Z GET /api/get-bmi-history 304
+eodinzov94@gmail.com 2023-07-17T19:16:10.329Z GET /api/auth-me 304
+eodinzov94@gmail.com 2023-07-17T19:16:10.534Z GET /api/get-meal-history 304
+eodinzov94@gmail.com 2023-07-17T19:16:10.604Z GET /api/get-goal 304
+eodinzov94@gmail.com 2023-07-17T19:16:10.674Z GET /api/get-bmi-history 304

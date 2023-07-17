@@ -12,9 +12,10 @@ import { useGetBmiHistoryQuery, useGetGoalQuery, useGetMealHistoryQuery } from '
 import DashboardGoal from '../components/DashboardGoal';
 
 const DashboardPage = () => {
-    useGetGoalQuery(null)
-    useGetMealHistoryQuery(null)
-    useGetBmiHistoryQuery(null)
+    const email = useAppSelector((state) => state.auth.user?.email) || '';
+    useGetGoalQuery(email,{refetchOnMountOrArgChange: true})
+    useGetMealHistoryQuery(email,{refetchOnMountOrArgChange: true})
+    useGetBmiHistoryQuery(email,{refetchOnMountOrArgChange: true})
     const navigate = useNavigate();
     const user = useAppSelector((state) => state.auth.user) as IUser;
     const isSm = useMediaQuery((theme: Theme) =>
