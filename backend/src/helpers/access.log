@@ -243,3 +243,17 @@ eodinzov94@gmail.com 2023-07-17T18:11:55.683Z GET /api/get-bmi-history 304
 eodinzov94@gmail.com 2023-07-17T18:11:58.744Z POST /api/update-goal 200
 eodinzov94@gmail.com 2023-07-17T18:12:54.462Z POST /api/update-bmi 200
 eodinzov94@gmail.com 2023-07-17T18:13:00.249Z POST /api/update-bmi 200
+eodinzov94@gmail.com 2023-07-17T18:16:21.619Z GET /api/get-goal 200
+eodinzov94@gmail.com 2023-07-17T18:16:21.650Z GET /api/get-meal-history 304
+eodinzov94@gmail.com 2023-07-17T18:16:21.667Z GET /api/get-bmi-history 304
+eodinzov94@gmail.com 2023-07-17T18:25:11.468Z POST /api/report-meal 200
+eodinzov94@gmail.com 2023-07-17T18:26:43.092Z POST /api/report-meal 200
+eodinzov94@gmail.com 2023-07-17T18:27:24.839Z POST /api/report-meal 200
+eodinzov94@gmail.com 2023-07-17T18:27:47.829Z POST /api/report-meal 200
+eodinzov94@gmail.com 2023-07-17T18:28:14.922Z POST /api/report-meal 200
+eodinzov94@gmail.com 2023-07-17T18:32:12.164Z GET /api/get-meal-history 200
+eodinzov94@gmail.com 2023-07-17T18:32:12.174Z GET /api/get-bmi-history 304
+eodinzov94@gmail.com 2023-07-17T18:32:12.200Z GET /api/get-goal 304
+eodinzov94@gmail.com 2023-07-17T18:32:42.643Z POST /api/report-meal 200
+admin@gmail.com 2023-07-17T18:33:37.377Z POST /api/register 200
+admin@gmail.com 2023-07-17T18:34:44.781Z POST /api/login 200

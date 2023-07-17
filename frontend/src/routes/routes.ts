@@ -35,7 +35,14 @@ export const publicRoutes: IRoute[] = [
     { path: RouteNames.LOGIN, element: LoginPage },
     { path: RouteNames.REGISTER, element: RegisterPage },
     { path: RouteNames.HOME, element: FoodTablePage },
-    { path: RouteNames.ETC, element: RedirectHome },
+    { path: RouteNames.REPORT_FOOD, element: RedirectHome },
+    { path: RouteNames.BMI_CHART, element: RedirectHome },
+    { path: RouteNames.GOAL_SET, element: RedirectHome },
+    { path: RouteNames.CALORIES_CHART, element: RedirectHome },
+    { path: RouteNames.FOOD_TABLE, element: RedirectHome },
+    { path: RouteNames.HOME, element: RedirectHome },
+    { path: RouteNames.DASHBOARD, element: RedirectHome },
+    { path: RouteNames.ETC, element: NotFoundPage },
 ]
 
 export const userRoutes: IRoute[] = [
@@ -44,7 +51,7 @@ export const userRoutes: IRoute[] = [
     { path: RouteNames.GOAL_SET, element: GoalSetPage },
     { path: RouteNames.CALORIES_CHART, element: CaloriesChart },
     { path: RouteNames.FOOD_TABLE, element: FoodTablePage },
-    { path: RouteNames.HOME, element: FoodTablePage },
+    { path: RouteNames.HOME, element: DashboardPage },
     { path: RouteNames.DASHBOARD, element: DashboardPage },
     //Redirect
     { path: RouteNames.LOGIN, element: RedirectHome },

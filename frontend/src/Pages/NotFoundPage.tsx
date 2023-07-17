@@ -1,6 +1,6 @@
 import { Box, Button } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
-import Image404 from '../assets/Image404.svg';
+import Image404 from '../assets/Page404.jpg';
 const NotFoundPage = () => {
     const navigate = useNavigate();
 

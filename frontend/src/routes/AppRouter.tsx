@@ -6,14 +6,13 @@ export const AppRouter = () => {
     const { user, isLoggedIn } = useAppSelector(selectAuthentication)
     return (
         <Routes>
-            {!isLoggedIn && (publicRoutes.map((route) => (
-                <Route path={route.path} element={<route.element />} key={route.path} />
-            )))}
-            {isLoggedIn && user?.role === "User" && (userRoutes.map((route) => (
-                <Route path={route.path} element={<route.element />} key={route.path} />
-            )))}
-            {isLoggedIn && user?.role === "Admin" && (adminRoutes.map((route) => (
-                <Route path={route.path} element={<route.element />} key={route.path} />
-            )))}
+            {!isLoggedIn ?
+                publicRoutes.map(route => <Route path={route.path} element={<route.element />} key={route.path} />)
+                : user?.role !== "Admin" ?
+                    userRoutes.map(route => <Route path={route.path} element={<route.element />} key={route.path} />)
+                    :
+                    adminRoutes.map(route => <Route path={route.path} element={<route.element />} key={route.path} />
+                    )
+            }
         </Routes>)
 };
