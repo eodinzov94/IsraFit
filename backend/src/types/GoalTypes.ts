@@ -7,6 +7,7 @@ export interface IGoal {
     recommendedCalories: number
     startDate: Date
     duration: number
+    targetBmi: number
 }
 export interface IGoalInput {
     endDate: Date

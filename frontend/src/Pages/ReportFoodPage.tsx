@@ -1,10 +1,12 @@
 import { ChangeEvent, MouseEvent, useState } from 'react'
 import {
+  Alert,
   Box,
   Button,
   Grid,
   Input,
   Paper,
+  Snackbar,
   Table,
   TableBody,
   TableCell,
@@ -22,8 +24,11 @@ import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
 import { DatePicker, LocalizationProvider } from '@mui/x-date-pickers'
 import RestartAltIcon from '@mui/icons-material/RestartAlt'
 import SendIcon from '@mui/icons-material/Send'
+import { useReportMealMutation } from '../store/reducers/api-reducer'
+import LoaderWithError from '../components/LoaderWithError'
 
 const ReportFoodPage = () => {
+  const [reportMeal, { isError, isLoading, error,isSuccess }] = useReportMealMutation()
   const [quantity, setQuantity] = useState<number>(100)
   const [currItem, setItem] = useState<number>(-1)
   const [mealDate, setDate] = useState<dayjs.Dayjs>(dayjs())
@@ -31,6 +36,9 @@ const ReportFoodPage = () => {
   const [page, setPage] = useState(0)
   const [rowsPerPage, setRowsPerPage] = useState(10)
   const [searchTerm, setSearchTerm] = useState('')
+  const handleReportMeal = () => {
+    reportMeal({ date: mealDate.toDate(), totalCalories: sum })
+  }
   const handleChangePage = (
     _event: MouseEvent<HTMLButtonElement> | null,
     newPage: number,
@@ -62,7 +70,13 @@ const ReportFoodPage = () => {
   )
   return (
     <div>
+      <LoaderWithError isError={isError} error={error} isLoading={isLoading} />
       <Grid sx={{ mt: 2 }} container spacing={3} justifyContent='space-evenly'>
+        <Snackbar open={isSuccess} autoHideDuration={3000} anchorOrigin={{ vertical: 'top', horizontal: 'center' }} >
+          <Alert severity="success" sx={{ width: '100%' }} >
+            Meal added successfully
+          </Alert>
+        </Snackbar>
         <Tooltip title='per 100gr/100ml' arrow>
           <TextField
             label='Search'
@@ -116,9 +130,7 @@ const ReportFoodPage = () => {
             <Button
               type='submit'
               variant='contained'
-              onClick={() => {
-                console.log('hey!') //TODO
-              }}
+              onClick={handleReportMeal}
               sx={{ color: 'white' }}>
               <SendIcon />
             </Button>
@@ -176,7 +188,7 @@ const ReportFoodPage = () => {
                 <TableCell data-label='Food Energy (kcal)'>{item.food_energy}</TableCell>
                 <TableCell data-label='Total Sugars (gr)'>{item.total_sugars}</TableCell>
                 <TableCell sx={{ display: 'flex', flexDirection: 'row', gap: 3, alignItems: 'baseline', p: 2 }}
-                           data-label='Quantity'>
+                  data-label='Quantity'>
 
                   <Input
                     key={item.code}

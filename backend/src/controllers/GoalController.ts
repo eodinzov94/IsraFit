@@ -3,6 +3,7 @@ import ApiError from '../error/ApiError.js'
 import Goal from '../models/Goal.js'
 import { IGoalInput } from '../types/GoalTypes.js'
 import { RequestWithUser, TypedRequestBody } from '../types/RequestType.js'
+import { calculateBMI } from './UserBmiController.js'
 
 
 function getDifferenceInDays(startDate: Date, endDate: Date): number {
@@ -25,8 +26,9 @@ class GoalController {
                 recommendedCalories,
                 startDate,
                 duration: getDifferenceInDays(startDate, new Date(endDate)),
+                targetBmi: calculateBMI(goalWeight, req.user!.height),
             })
-            return res.json({ status: 'OK' , goal })
+            return res.json({ status: 'OK' , goal: goal[0] })
         } catch (e: any) {
             console.log(e);
             return next(ApiError.badRequest('Input error, maybe user with passed ID does not exists'))

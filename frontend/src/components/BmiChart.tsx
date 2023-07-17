@@ -40,9 +40,8 @@ export const options = {
 };
 const BmiChart: FC<BmiChartProps> = ({ skip }) => {
     const { isLoading } = useGetBmiHistoryQuery(null, { skip: !!skip});
-    //TODO: ADD goal BMI CALC
     const bmiHistory = useAppSelector((state) => state.userData.bmiHistory);
-    const bmiTarget = useAppSelector((state) => state.userData.goalBmi);
+    const bmiTarget = useAppSelector((state) => state.userData.goal?.targetBmi);
     const data = {
         labels: bmiHistory.map(item => item.date),
         datasets: [

@@ -8,9 +8,9 @@ class MealController {
     async reportMeal(req: TypedRequestBody<InputMealDaily>, res: Response, next: NextFunction) {
         const {totalCalories, date,} = req.body
         try {
-            const meal = await MealDaily.findOne({ where: { userId: req.user?.id, date: date } })
+            let meal = await MealDaily.findOne({ where: { userId: req.user?.id, date: date } })
             if(!meal) {
-                await MealDaily.create({
+                meal = await MealDaily.create({
                     totalCalories,
                     date,
                     userId: req.user!.id

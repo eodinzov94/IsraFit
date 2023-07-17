@@ -35,7 +35,6 @@ export const apiReducer = createApi({
             async onQueryStarted(args, { dispatch, queryFulfilled }) {
                 try {
                     const { data } = await queryFulfilled
-                    console.log(data);
 
                     dispatch(setUser(data.user))
                 } catch (error) {

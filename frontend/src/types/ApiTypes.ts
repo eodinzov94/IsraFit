@@ -89,11 +89,11 @@ export interface IGoal {
     recommendedCalories: number
     startDate: Date
     duration: number
+    targetBmi: number
 }
 
 export interface UserDataState{
     goal: (null | IGoal),
     mealHistory: IMealDaily[]
     bmiHistory: IUserBMI[]
-    goalBmi: (null | number)
 }

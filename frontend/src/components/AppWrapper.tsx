@@ -1,4 +1,6 @@
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
+import FitnessCenterIcon from '@mui/icons-material/FitnessCenter';
+import LogoutIcon from '@mui/icons-material/Logout';
 import MenuIcon from '@mui/icons-material/Menu';
 import { FormControlLabel, ListItemButton, ListItemText, Switch } from '@mui/material';
 import MuiAppBar, { AppBarProps as MuiAppBarProps } from '@mui/material/AppBar';
@@ -13,12 +15,10 @@ import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import { styled } from '@mui/material/styles';
 import { FC, useState } from 'react';
-import FitnessCenterIcon from '@mui/icons-material/FitnessCenter';
-import { mainListItems, secondaryListItems, topListItemsGuest } from './Items';
+import { Link } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../store/hooks';
 import { logout, selectAuthentication } from '../store/reducers/auth-reducer';
-import LogoutIcon from '@mui/icons-material/Logout';
-import { Link } from 'react-router-dom';
+import { mainListItems, topListItemsGuest } from './Items';
 const drawerWidth = 240;
 
 interface AppBarProps extends MuiAppBarProps {
@@ -152,8 +152,6 @@ const AppWrapper: FC<AppWrapperProps> = ({ children, setDarkThemeSelected, darkT
                 <Divider />
                 <List component="nav">
                     {mainListItems}
-                    <Divider sx={{ my: 1 }} />
-                    {secondaryListItems}
                 </List>
             </Drawer>}
             <Box

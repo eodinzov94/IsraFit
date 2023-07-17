@@ -31,6 +31,7 @@ export const generateJwt = (user: IUser) => {
       id: user.id,
       email: user.email,
       role: user.role,
+      height: user.height,
     },
     process.env.JWT_SECRET_KEY as string,
     { expiresIn: '48h' },

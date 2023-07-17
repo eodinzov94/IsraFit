@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { IGoal, IMealDaily, IUserBMI, UserDataState } from '../../types/ApiTypes'
 
-const initialState: UserDataState = { goal: null, mealHistory: [], bmiHistory: [], goalBmi: 24.5 }
+const initialState: UserDataState = { goal: null, mealHistory: [], bmiHistory: [] }
 
 const userDataSlice = createSlice({
     name: 'user-data',

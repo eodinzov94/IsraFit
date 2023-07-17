@@ -32,7 +32,7 @@ class UserBmiController {
             const BMR = (10 * user.weight + 6.25 * user.height - 5 * (new Date().getFullYear() - user.birthYear)) + (user.gender === 'Male' ? 5 : -161); //formula
             user.TDEE = BMR * user.physicalActivity; //total daily energy expenditure formula
             await user.save()          
-            return res.json({ status: 'OK', user , userBmiReport })
+            return res.json({ status: 'OK', user , userBmiReport: userBmiReport[0] })
         } catch (e: any) {
             return next(ApiError.badRequest('Input error, maybe user with passed ID does not exists'))
         }

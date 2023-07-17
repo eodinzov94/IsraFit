@@ -44,25 +44,4 @@ export const topListItemsGuest = (
             <LoginIcon color='warning' />
         </ListItemButton>
     </>
-)
-
-
-export const secondaryListItems = (
-    <>
-        <ListSubheader component="div" inset>
-            Set Targets
-        </ListSubheader>
-        <ListItemButton>
-            <ListItemIcon>
-                <AssignmentIcon />
-            </ListItemIcon>
-            <ListItemText primary="Target for BMI" />
-        </ListItemButton>
-        <ListItemButton component={Link} to="/goal-set">
-            <ListItemIcon>
-                <AssignmentIcon />
-            </ListItemIcon>
-            <ListItemText primary="Target for Calories" />
-        </ListItemButton>
-    </>
 );
