@@ -26,41 +26,52 @@ describe('Register page tests', function() {
         By.name('height'),
         By.name('weight'),
         By.name('physicalActivity'),
-      ];
-      const elementPromises = elementLocators.map((locator) => driver.findElement(locator));
+      ]
+      const elementPromises = elementLocators.map((locator) => driver.findElement(locator))
 
-      const elements = await Promise.all(elementPromises);
+      const elements = await Promise.all(elementPromises)
 
       elements.forEach((element, index) => {
-        assert(element, `Element with locator ${elementLocators[index]} should exist.`);
-      });
+        assert(element, `Element with locator ${elementLocators[index]} should exist.`)
+      })
     })
   })
 
   describe('Register page form submission', function() {
     it('should submit the registration form', async function() {
-      await driver.wait(until.elementLocated(By.name('firstName')), 5000);
+      await driver.wait(until.elementLocated(By.name('firstName')), 5000)
 
-      const firstNameElement = await driver.findElement(By.name('firstName'));
-      const lastNameElement = await driver.findElement(By.name('lastName'));
-      const emailElement = await driver.findElement(By.id('email'));
-      const passwordElement = await driver.findElement(By.name('password'));
-      const confirmPasswordElement = await driver.findElement(By.name('confirmPassword'));
-      const submitButtonElement = await driver.findElement(By.css('button[type="submit"]'));
+      const firstNameElement = await driver.findElement(By.name('firstName'))
+      const lastNameElement = await driver.findElement(By.name('lastName'))
+      const emailElement = await driver.findElement(By.id('email'))
+      const passwordElement = await driver.findElement(By.name('password'))
+      const confirmPasswordElement = await driver.findElement(By.name('confirmPassword'))
+      const submitButtonElement = await driver.findElement(By.css('button[type="submit"]'))
 
-      await firstNameElement.sendKeys('Isra');
-      await lastNameElement.sendKeys('Fit');
-      await emailElement.sendKeys('israfit@react.com');
-      await passwordElement.sendKeys('password123');
-      await confirmPasswordElement.sendKeys('password123');
+      await firstNameElement.sendKeys('Isra')
+      await lastNameElement.sendKeys('Fit')
+      await emailElement.sendKeys('israfit@react.com')
+      await passwordElement.sendKeys('password123')
+      await confirmPasswordElement.sendKeys('password123')
 
-      assert.strictEqual(await firstNameElement.getAttribute('value'), 'Isra');
-      assert.strictEqual(await lastNameElement.getAttribute('value'), 'Fit');
-      assert.strictEqual(await emailElement.getAttribute('value'), 'israfit@react.com');
-      assert.strictEqual(await passwordElement.getAttribute('value'), 'password123');
-      assert.strictEqual(await confirmPasswordElement.getAttribute('value'), 'password123');
+      assert.strictEqual(await firstNameElement.getAttribute('value'), 'Isra')
+      assert.strictEqual(await lastNameElement.getAttribute('value'), 'Fit')
+      assert.strictEqual(await emailElement.getAttribute('value'), 'israfit@react.com')
+      assert.strictEqual(await passwordElement.getAttribute('value'), 'password123')
+      assert.strictEqual(await confirmPasswordElement.getAttribute('value'), 'password123')
 
-      await submitButtonElement.click();
-    });
-  });
+      await submitButtonElement.click()
+    })
+  })
+  describe('Check redirection to homepage', function() {
+    it('should just redirect to homepage', async function() {
+      await driver.wait(until.elementLocated(By.id('email')), 5000)
+      const redirectElement = await driver.findElement(By.css('a.MuiBox-root.css-mv5f6b'))
+      await redirectElement.click()
+
+      // Should redirect to foodtablepage
+      const textFieldElement = await driver.findElement(By.id('search'))
+      assert(textFieldElement, 'Search should exist.')
+    })
+  })
 })

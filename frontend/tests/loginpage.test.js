@@ -59,4 +59,16 @@ describe('Login page tests', function() {
       }
     })
   })
+
+  describe('Check redirection to homepage', function() {
+    it('should just redirect to homepage', async function() {
+      await driver.wait(until.elementLocated(By.name('password')), 5000)
+      const redirectElement = await driver.findElement(By.css('a.MuiBox-root.css-mv5f6b'))
+      await redirectElement.click()
+
+      // Should redirect to foodtablepage
+      const textFieldElement = await driver.findElement(By.id('search'))
+      assert(textFieldElement, 'Search should exist.')
+    })
+  })
 })
