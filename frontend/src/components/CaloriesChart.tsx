@@ -34,7 +34,7 @@ export const options = {
         },
         title: {
             display: true,
-            text: 'BMI Graph',
+            text: 'Calories Chart',
         },
     },
 };
