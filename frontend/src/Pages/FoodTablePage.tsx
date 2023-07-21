@@ -50,6 +50,7 @@ const FoodTablePage = () => {
     <div>
       <Tooltip title="per 100gr/100ml" arrow>
       <TextField
+        id="search"
         label="Search"
         variant="outlined"
         value={searchTerm}

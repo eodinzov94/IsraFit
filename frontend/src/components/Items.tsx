@@ -39,7 +39,7 @@ export const topListItemsGuest = (
             <AppRegistrationIcon color='warning' />
         </ListItemButton>
 
-        <ListItemButton component={Link} to="/login" color='secondary' sx={{ marginRight: '10px', border: '1px solid white',borderRadius: '5px', width: { xs: '60px', sm: '120px' }}}>
+        <ListItemButton component={Link} to="/login" color='secondary' id="navToLogin" sx={{ marginRight: '10px', border: '1px solid white',borderRadius: '5px', width: { xs: '60px', sm: '120px' }}}>
             <ListItemText primary="Login" sx={{ color: 'white',textAlign: 'center' , visibility:{ xs: 'hidden', sm: 'visible' }}}/>
             <LoginIcon color='warning' />
         </ListItemButton>
