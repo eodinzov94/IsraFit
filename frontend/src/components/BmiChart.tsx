@@ -69,7 +69,7 @@ const BmiChart: FC<BmiChartProps> = ({ skip }) => {
         <>{isLoading ?
             <LinearProgress />
             :
-            <Line options={options} data={data} />
+            <Line id='canvas' options={options} data={data} />
         }
         </>
     );

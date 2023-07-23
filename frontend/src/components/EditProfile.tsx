@@ -199,6 +199,7 @@ const EditProfile: FC<EditProfileProps> = ({ open, setOpen }) => {
                     variant="contained"
                     sx={{ color: 'white' }}
                     onClick={closeAndRestForm}
+                    id='cancelEditProfileButton'
                 >
                     Cancel
                 </Button>

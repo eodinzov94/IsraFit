@@ -68,6 +68,7 @@ const DashboardPage = () => {
                             variant='contained'
                             sx={{ mb: 2, color: 'white' }}
                             onClick={() => setOpenBmiReport(true)}
+                            id='BMIButton'
                         >
                             Report
                             Daily
@@ -77,7 +78,7 @@ const DashboardPage = () => {
                             variant='contained'
                             sx={{ mb: 2, color: 'white' }}
                             onClick={() => navigate(RouteNames.REPORT_FOOD)}
-
+                            id='caloriesButton'
                         >
                             Report Calories
                         </Button>
@@ -85,6 +86,7 @@ const DashboardPage = () => {
                             variant='contained'
                             sx={{ mb: 2, color: 'white' }}
                             onClick={() => navigate(RouteNames.GOAL_SET)}
+                            id='goalButton'
                         >
                             Set/Change Goal
                         </Button>

@@ -40,6 +40,7 @@ const Profile: FC<ProfileProps> = ({ user, isSm }) => {
                     variant='contained'
                     sx={{ mb: 2, color: 'white' }}
                     onClick={() => setOpenEdit(true)}
+                    id='editProfileButton'
                 >
                     Edit Profile
                 </Button>

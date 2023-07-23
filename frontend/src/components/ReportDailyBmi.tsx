@@ -82,6 +82,7 @@ const ReportDailyBmi: FC<ReportDailyBmiProps> = ({ open, setOpen }) => {
                     sx={{ color: 'white' }}
                     type="submit"
                     onClick={() => formik.handleSubmit()}
+                    id='cancelBMIReportButton'
                 >
                     Confirm
                 </Button>
