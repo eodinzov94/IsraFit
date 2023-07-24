@@ -4,6 +4,7 @@ import { loginData } from './loginData.js'
 
 describe('Goal chart tests', function() {
   let driver
+  this.timeout(10000)
 
   before(async function() {
     driver = await new Builder().forBrowser('chrome').build()

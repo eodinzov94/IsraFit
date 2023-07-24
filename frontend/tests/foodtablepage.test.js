@@ -3,7 +3,7 @@ import assert from 'assert'
 
 describe('Homepage tests', function() {
   let driver
-
+  this.timeout(10000)
   before(async function() {
     driver = await new Builder().forBrowser('chrome').build()
     await driver.get('http://localhost:5173')

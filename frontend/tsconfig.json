@@ -7,13 +7,14 @@
       "DOM",
       "DOM.Iterable"
     ],
-    "module": "CommonJS",
+    "module": "ESNext",
     "skipLibCheck": true,
     /* Bundler mode */
     "moduleResolution": "node",
     "allowSyntheticDefaultImports": true,
     "resolveJsonModule": true,
     "isolatedModules": true,
+    "noEmit": true,
     "jsx": "react-jsx",
     /* Linting */
     "strict": true,

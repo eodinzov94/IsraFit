@@ -3,6 +3,7 @@ import assert from 'assert'
 
 describe('Not found page tests', function() {
   let driver
+  this.timeout(10000)
 
   before(async function() {
     driver = await new Builder().forBrowser('chrome').build()
